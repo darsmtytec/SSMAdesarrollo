@@ -3,8 +3,8 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 include 'header.php';
-//echo utf8_encode('Todo el contenido debería de cargarse aquí');
+//echo utf8_encode('Todo el contenido deberï¿½a de cargarse aquï¿½');
 ?>
-<h4>HOLA</h4>
+<h4>Tu contenido</h4>
 <?php include 'footer.php'; ?>
 </html>
