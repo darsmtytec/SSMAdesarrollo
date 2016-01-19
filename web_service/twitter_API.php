@@ -8,6 +8,20 @@
 
 header("Access-Control-Allow-Origin: *");
 
+//<editor-fold desc="Remove accents">
+/**
+ * Replace accented characters with non accented
+ *
+ * @param $str
+ * @return mixed
+ * @link http://myshadowself.com/coding/php-function-to-convert-accented-characters-to-their-non-accented-equivalant/
+ */
+function removeAccents($str) {
+    $a = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ', 'Ά', 'ά', 'Έ', 'έ', 'Ό', 'ό', 'Ώ', 'ώ', 'Ί', 'ί', 'ϊ', 'ΐ', 'Ύ', 'ύ', 'ϋ', 'ΰ', 'Ή', 'ή');
+    $b = array('A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's', 'a', 'a', 'a', 'a', 'a', 'a', 'ae', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y', 'A', 'a', 'A', 'a', 'A', 'a', 'C', 'c', 'C', 'c', 'C', 'c', 'C', 'c', 'D', 'd', 'D', 'd', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'G', 'g', 'G', 'g', 'G', 'g', 'G', 'g', 'H', 'h', 'H', 'h', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'IJ', 'ij', 'J', 'j', 'K', 'k', 'L', 'l', 'L', 'l', 'L', 'l', 'L', 'l', 'l', 'l', 'N', 'n', 'N', 'n', 'N', 'n', 'n', 'O', 'o', 'O', 'o', 'O', 'o', 'OE', 'oe', 'R', 'r', 'R', 'r', 'R', 'r', 'S', 's', 'S', 's', 'S', 's', 'S', 's', 'T', 't', 'T', 't', 'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w', 'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A', 'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A', 'a', 'AE', 'ae', 'O', 'o', 'Α', 'α', 'Ε', 'ε', 'Ο', 'ο', 'Ω', 'ω', 'Ι', 'ι', 'ι', 'ι', 'Υ', 'υ', 'υ', 'υ', 'Η', 'η');
+    return str_replace($a, $b, $str);
+}
+//</editor-fold>
 
 $b=0;
 require_once("twitteroauth.php");
@@ -31,12 +45,6 @@ $kloutKey = 'hjsske2mer3th85ub6e5bw82';
 // ************** TWITTER API ***********************
 $post[]='';
 //if ($_POST["submit"] && ($_POST["user"][0] != '' || $_POST["topic"][0] != '' || $_POST["search"][0] != '')) {
-function removeAccents($str)
-{
-    $a = array('�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '�', '�', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '�', '�', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '�', '?', '?', '?', '?', '�', '�', '?', '�', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?');
-    $b = array('A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's', 'a', 'a', 'a', 'a', 'a', 'a', 'ae', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y', 'A', 'a', 'A', 'a', 'A', 'a', 'C', 'c', 'C', 'c', 'C', 'c', 'C', 'c', 'D', 'd', 'D', 'd', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'G', 'g', 'G', 'g', 'G', 'g', 'G', 'g', 'H', 'h', 'H', 'h', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'IJ', 'ij', 'J', 'j', 'K', 'k', 'L', 'l', 'L', 'l', 'L', 'l', 'L', 'l', 'l', 'l', 'N', 'n', 'N', 'n', 'N', 'n', 'n', 'O', 'o', 'O', 'o', 'O', 'o', 'OE', 'oe', 'R', 'r', 'R', 'r', 'R', 'r', 'S', 's', 'S', 's', 'S', 's', 'S', 's', 'T', 't', 'T', 't', 'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w', 'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A', 'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A', 'a', 'AE', 'ae', 'O', 'o', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?');
-    return str_replace($a, $b, $str);
-}
 
 $notweets = 2;
 $consumerkey = "0O4NDYS28rd96Uh6uGENXvp5y";
@@ -290,7 +298,7 @@ $data = http_build_query(array('key'=>$key,
                                     }elseif($json['status']['code'] == '100'){ // Servicio denegado
                                         $var = false;
                                     }else{
-                                        //echo '<br> Sentimiento: Neutral'; // No determin� sentimiento positivo/negativo
+                                        //echo '<br> Sentimiento: Neutral'; // No determin� sentimiento positivo/negativo
                                         echo 'Sentimiento: <span class="label label-default">Neutral</span>';
                                     }
                                 }
@@ -304,13 +312,13 @@ $data = http_build_query(array('key'=>$key,
                         }elseif($json['status']['code'] == '104'){
                             echo '<br> Request rate limit exceeded.';
                         }elseif($json['status']['code'] == '200'){
-                            echo '<br> Par�metro faltante.';
+                            echo '<br> Par�metro faltante.';
                         }elseif($json['status']['code'] == '201' || $json['status']['code'] == '204'){
                             echo '<br> Lenguaje no soportado.';
                         }else{
                             //echo '<br> Sentimiento: Neutral'; // No determino sentimiento positivo/negativo
                             echo 'Sentimiento: <span class="label label-default">Neutral</span>';
-                        } //Ver la manera de mandar un email a los admin, avisando de la expiraci�n de la licencia.
+                        } //Ver la manera de mandar un email a los admin, avisando de la expiraci�n de la licencia.
                         // 101: The license has expire
                         /*
                             0: OK -- Listo
@@ -345,7 +353,7 @@ $data = http_build_query(array('key'=>$key,
                     $scoreKlout = intval($kloutUser);
                 }
                 // Button trigger modal
-               // echo '<br/><br/>�ndice KLOUT: <button class="btn btn-default orange-circle-button" type="button" data-toggle="modal" data-target="#myModal'.$a.'">
+               // echo '<br/><br/>�ndice KLOUT: <button class="btn btn-default orange-circle-button" type="button" data-toggle="modal" data-target="#myModal'.$a.'">
                  //                       <p style="font-size: 25px;">'.$scoreKlout.'
                    //                     </button></div></div>';
 
@@ -525,7 +533,7 @@ echo json_encode($arraySearch);
                                     }elseif($json['status']['code'] == '100'){ // Servicio denegado
                                         $var = false;
                                     }else{
-                                        //echo '<br> Sentimiento: Neutral'; // No determin� sentimiento positivo/negativo
+                                        //echo '<br> Sentimiento: Neutral'; // No determin� sentimiento positivo/negativo
                                         echo 'Sentimiento: <span class="label label-default">Neutral</span>';
                                     }
                                 }
@@ -537,13 +545,13 @@ echo json_encode($arraySearch);
                         }elseif($json['status']['code'] == '104'){
                             echo '<br> Request rate limit exceeded.';
                         }elseif($json['status']['code'] == '200'){
-                            echo '<br> Par�metro faltante.';
+                            echo '<br> Par�metro faltante.';
                         }elseif($json['status']['code'] == '201' || $json['status']['code'] == '204'){
                             echo '<br> Lenguaje no soportado.';
                         }else{
                             //echo '<br> Sentimiento: Neutral'; // No determino sentimiento positivo/negativo
                             echo 'Sentimiento: <span class="label label-default">Neutral</span>';
-                        } //Ver la manera de mandar un email a los admin, avisando de la expiraci�n de la licencia.
+                        } //Ver la manera de mandar un email a los admin, avisando de la expiraci�n de la licencia.
                         // 101: The license has expire
                         /*
                             0: OK -- Listo
@@ -574,7 +582,7 @@ echo json_encode($arraySearch);
                     $scoreKlout = intval($kloutUser);
                 }
                 // Button trigger modal
-                echo '<br/><br/>�ndice KLOUT: <button class="btn btn-default orange-circle-button" type="button" data-toggle="modal" data-target="#myModal'.$a.'">
+                echo '<br/><br/>�ndice KLOUT: <button class="btn btn-default orange-circle-button" type="button" data-toggle="modal" data-target="#myModal'.$a.'">
                                         <p style="font-size: 25px;">'.$scoreKlout.'
                                         </button></div></div>';
 
