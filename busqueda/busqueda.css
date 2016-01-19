@@ -1,0 +1,15 @@
+.search-label {
+    text-transform: none !important;
+    padding: 4px 6px 4px 6px !important;
+    font-size: 14px;
+    font-weight: 300;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    margin: 1.5px 0px 1.5px 0px !important;
+}
+.search-label a{
+    color: #fff;
+}

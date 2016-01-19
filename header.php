@@ -5,10 +5,9 @@
  * Date: 1/15/2016
  * Time: 3:42 PM
  */
-echo utf8_encode('
+echo '
 <!-- BEGIN HEAD -->
 <head>
-    <meta charset="utf-8" />
     <title>Lab 2 | SMA</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -34,7 +33,7 @@ echo utf8_encode('
     <link rel="shortcut icon" href="favicon.ico" /> </head>
 <!-- END HEAD -->
 
-<body class="page-container-bg-solid page-boxed page-md">
+<body class="page-container-bg-solid page-boxed page-md page-header-menu-fixed">
 <!-- BEGIN HEADER -->
 <div class="page-header">
     <!-- BEGIN HEADER TOP -->
@@ -43,7 +42,7 @@ echo utf8_encode('
             <!-- BEGIN LOGO -->
             <div class="page-logo">
                 <a href="index.html">
-                    <img src="assets/layouts/layout3/img/logo-SMA.png" alt="logo" class="logo-default">
+                    <img src="assets/layouts/layout3/img/logo-SMA.PNG" alt="logo" class="logo-default">
                 </a>
             </div>
             <!-- END LOGO -->
@@ -881,4 +880,4 @@ echo utf8_encode('
                 </ul>
                 <!-- END PAGE BREADCRUMBS -->
                 <!-- BEGIN PAGE CONTENT INNER -->
-                <div class="page-content-inner">');
+                <div class="page-content-inner">';
