@@ -6,6 +6,7 @@
  */
 require_once("reddit.php");
 $reddit = new reddit();
+$post=[];
 
 //<editor-fold desc="Remove accents">
 /**
@@ -23,7 +24,7 @@ function removeAccents($str) {
 //</editor-fold>
 
 
-$topicsReddit = ['tec'];
+$topicsReddit = ['monterrey'];
 // Obtener lista de terminos
 /*
 if ($accounts[0] != '') {
@@ -43,20 +44,30 @@ for($d=0; $d< count($topicsReddit); $d++){ // count($topicsReddit)
     // $user = $reddit->getUser();
     $string_reddit = file_get_contents("http://reddit.com/api/subreddits_by_topic.json?query=".$topicsReddit[$d]); // GET [/r/subreddit]/search[ .json | .xml ]
     $json = json_decode($string_reddit, true);
+
+    //var_dump($json);
+    $count = count($json);
     // tenemos la lista de subreddits que tienen el tema buscado
-    for($c=0; $c< count($json); $c++){
+    for($c=0; $c<$count ; $c++){
+        //echo $c."<br>";
         $string_redditSub = file_get_contents("http://reddit.com/r/".$json[$c]['name'].".json");
         $jsonSub = json_decode($string_redditSub, true);
-        //var_dump($json);
+        //var_dump($jsonSub);
 
         $children = $jsonSub['data']['children'];
         foreach ($children as $child){
             $id = $child['data']['id'];
             $title = $child['data']['title'];
+            $url = $child["data"]["url"];
             $num_comments = $child['data']['num_comments'];
             $permalink = $child['data']['permalink'];
             $author = $child['data']['author'];
             $name = $child['data']['name'];
+
+            $likes = $child["data"]["likes"];
+            $score = $child["data"]["score"];
+            $over_18 = $child["data"]["over_18"];
+
             // echo 'id: '.($id)."<br />";
 
 
@@ -67,21 +78,25 @@ for($d=0; $d< count($topicsReddit); $d++){ // count($topicsReddit)
             }
 
             $arrayRedditTema = [
-                "id_tweet" => $id,
-                "cant_retweet" => $num_comments,
-                "text_tweet" => $title,
+                "id" => $id,
+                "num_comments" => $num_comments,
+                "title" => $title,
                 "text_clean" => $redditClean,
-                "id_usuario" => '',
+                "url" => $url,
                 "nombre_usuario" => $author,
                 "screen_name" => $name,
-                "foto_perfil" => $permalink,
-                "cuentas_que_sigue" => '',
-                "cuentas_que_lo_siguen" => '',
+                "permalink" => $permalink,
+                "likes" => $likes,
+                "score" => $score,
+                "over_18" => $over_18,
                 "api" => 'reddit'
             ];
+
+            array_push($post,$arrayRedditTema);
+
 
         }
     }
 }
-echo json_encode($arrayRedditTema);
+echo json_encode($post);
 

@@ -43,20 +43,7 @@ if (isset($_POST['search']) && $_POST['search'] != '') {
         array_push($topicsTumblr, $eachWord);
     }
 }
-/*
-if ($_POST["topic"][0] != '') {
-    $topicTumblr = $_POST["topic"];
-    foreach ($topicTumblr as $eachTopic) {
-        array_push($topicsTumblr, $eachTopic);
-    }
-}
-if ($_POST["search"][0] != '') {
-    $word = $_POST["search"];
-    foreach ($word as $eachWord) {
-        array_push($topicsTumblr, $eachWord);
-    }
-}
-*/
+
 //$consumerKey = 'shETGvB4luJt7WZj48JWs2gjsbrbrE9gGYXeJWij3vypSwSBDA';
 //$consumerSecret = 'lBVphsyJai5Lr500gbQ9KtuYASLrzEfAXeiVxLM84RJxVQ1XwM';
 

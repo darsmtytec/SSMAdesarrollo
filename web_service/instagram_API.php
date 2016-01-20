@@ -27,16 +27,69 @@ $client_token = '1690894050.79ef585.be4d8e2b93a9448e97d6765ff9542d86';
 
 // ************* Klout API ***************************
 $kloutKey = 'hjsske2mer3th85ub6e5bw82';
+
+//<editor-fold desc="Sentiment API">
+
+$key[0] = 'e9ce37fc21e2fbfba29bde1d2fbd3b61'; //socialmediadaac@gmail.com
+$key[1] = '21089e2646a625584cee07cc52421d24'; //socialmediadaac0@gmail.com
+$key[2] = '2662039e381619d652afa4bd08b11cf0'; //socialmediadaac1@gmail.com
+$key[3] = '247d733eb8fc2c8e8fe8e2f5492f1598'; //socialmediadaac2@gmail.com
+$key[4] = '6e09fa82b045b09fee2e0410baeee945'; //socialmediadaac3@gmail.com
+$key[5] = '91aa5264fa77df2e3c928cce324d6658'; //socialmediadaac4@gmail.com
+$key[6] = 'cf803ded8f0c20d1d3247694afb1a3b2'; //socialmediadaac5@gmail.com
+$key[7] = ''; // Sacar del while
+$txt = '';
+$model = 'auto';//general_es general_en general_fr auto  // es-general/en-general/fr-general/en-reputation/es-reputation DEPRECATED
+$keyIndex = 0;
+$showSentiment = false;
+
+if (isset($_POST["sentiment"]) && $_POST["sentiment"] != '') {
+    $showSentiment = $_POST["sentiment"];
+
+    if($showSentiment == 'true'){
+        $showSentiment = true;
+    }
+}
+
+// Auxiliary function to make a post request
+function sendPost($api, $key, $model, $txt) {
+    //  echo' api:'.$api;
+    /* Debug
+       echo' key:'.$key;
+       echo' model:'.$model;
+       echo' Text:'.$txt;
+    */
+    $data = http_build_query(array('key'=>$key,
+        'model'=>$model,
+        'txt'=>$txt,
+        'src'=>'sdk - php - 1.2')); // management internal parameter
+    $context = stream_context_create(array('http'=>array(
+        'method'=>'POST',
+        'header'=>
+            'Content - type: application / x - www - form - urlencoded'."\r\n".
+            'Content - Length: '.strlen($data)."\r\n",
+        'content'=>$data)));
+
+    $fd = fopen($api, 'r', false, $context);
+    $response = stream_get_contents($fd);
+    fclose($fd);
+    return $response;
+
+}
+
+// sendPost
+//*/
+//</editor-fold>
 ///////////////////////////////////////////////////
 $post[] = '';
-//$json = file_get_contents("https://instagram.com/oauth/authorize/?client_id=79ef585f61934698943db989482d7258&redirect_uri=http://10.2.27.52/modx/index.php&response_type=token");
-$topics= $_POST["topic"];
-//$topics[0] = "TecdeMonterrey";
+$sentiment = '';
+//$topics= $_POST["topic"];
+$topics[0] = "TecdeMonterrey";
 
 /************INSTAGRAM API**///////////////////////
 
+
 for ($b = 0; $b < count($topics); $b++) {
-    //echo '<br><STRONG>Instagram Search:</STRONG> ' . $topics[$b] . ' <br><br>';
     //$json1 = file_get_contents("https://api.instagram.com/v1/media/popular?client_id=".$client_id);// Most popular posts
     $json1 = file_get_contents("https://api.instagram.com/v1/tags/" . $topics[$b] . "/media/recent?client_id=" . $client_id);
     $posts = json_decode($json1, true);
@@ -44,6 +97,107 @@ for ($b = 0; $b < count($topics); $b++) {
     //var_dump($children);
 
     foreach ($children as $child) {
+
+        if ($showSentiment) {
+
+            $txt = $children['caption']['text'];
+
+            $sentiment = '';
+            // We make the request and parse the response to an array
+            $response = sendPost($api, $key[$keyIndex], $model, $txt);
+
+            $json = json_decode($response, true);
+            if (isset($json['status']) && isset($json['status']['code'])) {
+                if ($json['status']['code'] == '0') {
+
+                    $sentiment = $json['score_tag'];
+                    switch ($json['score_tag']) {
+                        case "P+":
+                            $sentiment = 'P+';
+                            break;
+                        case "P":
+                            $sentiment = 'P';
+                            break;
+                        case "NEU":
+                            $sentiment = 'NEU';
+                            break;
+                        case "N":
+                            $sentiment = 'N';
+                            break;
+                        case "N+":
+                            $sentiment = 'N+';
+                            break;
+                        case "NONE":
+                            $sentiment = 'NONE';
+                            break;
+                    }
+                }
+                // 102: You have exceeded the maximum number of credits per month
+                elseif ($json['status']['code'] == '102' || $json['status']['code'] == '101') {
+                    $var = true;
+                    while ($var):
+                        $keyIndex++;
+                        // We make the request AGAIN WITH NEW KEY and parse the response to an array
+                        $response = sendPost($api, $key[$keyIndex], $model, $txt);
+                        $json = json_decode($response, true);
+                        if (isset($json['status']) && isset($json['status']['code'])) {
+
+                            if (isset($json['score']) && $json['status']['code'] == '0') {
+                                $sentiment = $json['score_tag'];
+                                $var = false;
+                            }
+                            else if ($json['status']['code'] == '102') {
+                                // nothing to do...while continue
+                            }
+                            elseif ($json['status']['code'] == '100') { // Servicio denegado
+                                $var = false;
+                            }
+                            else {
+                            }
+                        }
+                    endwhile;
+                }
+                elseif ($json['status']['code'] == '100' || $json['status']['code'] == '202' || $json['status']['code'] == '203') {
+                    //echo '<br> Sentimiento: No disponible.';
+                    $sentiment = 'No disponible';
+                }
+                elseif ($json['status']['code'] == '103') {
+                    $sentiment = 'No disponible';
+                    //echo '<br> Request too large.';
+                }
+                elseif ($json['status']['code'] == '104') {
+                    //echo '<br> Request rate limit exceeded.';
+                }
+                elseif ($json['status']['code'] == '200') {
+                    //echo '<br> Par�metro faltante.';
+                }
+                elseif ($json['status']['code'] == '201' || $json['status']['code'] == '204') {
+                    //echo '<br> Lenguaje no soportado.';
+                }
+                else {
+                    //echo '<br> Sentimiento: Neutral'; // No determino sentimiento positivo/negativo
+                    //echo 'Sentimiento: <span class="label label-default">Neutral</span>';
+                }
+                //Ver la manera de mandar un email a los admin, avisando de la expiraci�n de la licencia.
+                // 101: The license has expire
+                /*
+                    0: OK -- Listo
+                    100: Operation denied -- Listo
+                    101: License expired -- Listo
+                    102: Credits per suscription exceeded -- Listo
+                    103: Request too large -- Listo
+                    104: Request rate limit exceeded
+                    200: Missing required parameter(s) - [name of the parameter]
+                    201: Model not supported
+                    202: Engine internal error
+                    203: Cannot connect to service
+                    204: Model not suitable for the identified text language
+                */
+            }
+        }
+
+
+
         $id = $child['id'];
         $type = $child['type'];
         $desc = $child['caption']['text'];
@@ -58,17 +212,14 @@ for ($b = 0; $b < count($topics); $b++) {
         $location = $child["location"];
         //$website = $child['user']['website'];
         $profile_pic = $child['user']['profile_picture'];
-        // echo ($user_id);
 
 
-        //echo "<div>Descripcion: " . $desc . "<br/> Usuario:" . $full_name . "<div class='embed-container'><iframe src='" . $link . "embed/' frameborder='0' scrolling='no' allowtransparency='true'></iframe></div></div>";
-
-
-        //limpieza instagram
+        //<editor-fold desc="Limpiar texto">
         $instaClean = '';
         if ($child['caption']['text'] != null && $child['caption']['text'] != '') {
             $instaClean = removeAccents($child['caption']['text']);
         }
+        //</editor-fold>
 
         $arraySearch = [
             "id_post" => $id,
@@ -88,6 +239,7 @@ for ($b = 0; $b < count($topics); $b++) {
             "location" => $location,
             "posts" => '',
             "nsfw" => '',
+            "sentiment" => $sentiment,
             "api" => 'instagram'
         ];
 
@@ -97,69 +249,4 @@ for ($b = 0; $b < count($topics); $b++) {
 
     }
 }
-// http://instagram.com/p/y78iHVmO1q test
-/*
-// TEST -- DELETE
-echo "<div class='width:50%'><div class='embed-container'><iframe src='//instagram.com/p/y78iHVmO1q/embed/' frameborder='0' scrolling='no' allowtransparency='true'></iframe></div></div>";
-//* embed Instagram -
-echo '<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4"
-style = " background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px;
-    padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);" >
-    <div style = "padding:8px;" > <div style = " background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;" >
-    <div style = " background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC);
-        display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;" ></div ></div >
-        <p style = " margin:8px 0 0 0; padding:0 4px;" >
-        <a href = "https://instagram.com/p/y-n2McypKz/" style = " color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal;
-        font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target = "_top" > Aprendiendo nuevos trucos #Router #ITESM #CampusLaguna</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">Una foto publicada por ihanelly (@ihanellyhdz) el <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-02-11T22:57:50+00:00">11 de Feb de 2015 a la(s) 2:57 PST</time></p></div></blockquote>
-< script async defer src = "//platform.instagram.com/en_US/embeds.js" ></script > ';
-///DELETE
-//*/
-///////////////************************************////////////////////////
-
-// ************** Sentiment API ***********************
-
-$key[0] = 'e9ce37fc21e2fbfba29bde1d2fbd3b61'; //socialmediadaac@gmail.com
-$key[1] = '21089e2646a625584cee07cc52421d24'; //socialmediadaac0@gmail.com
-$key[2] = '2662039e381619d652afa4bd08b11cf0'; //socialmediadaac1@gmail.com
-$key[3] = '247d733eb8fc2c8e8fe8e2f5492f1598'; //socialmediadaac2@gmail.com
-$key[4] = '6e09fa82b045b09fee2e0410baeee945'; //socialmediadaac3@gmail.com
-$key[5] = '91aa5264fa77df2e3c928cce324d6658'; //socialmediadaac4@gmail.com
-$key[6] = 'cf803ded8f0c20d1d3247694afb1a3b2'; //socialmediadaac5@gmail.com
-$key[7] = ''; // Sacar del while
-$txt = '';
-$model = 'auto';//general_es general_en general_fr auto  // es-general/en-general/fr-general/en-reputation/es-reputation DEPRECATED
-$keyIndex = 0;
-$showSentiment = false;
-/*
-if($_POST["sentiment"] == 'true'){
-    $showSentiment = true;
-}
-// Auxiliary function to make a post request
-function sendPost($api, $key, $model, $txt) {
-    //  echo' api:'.$api;
-    //* Debug
-       echo' key:'.$key;
-       echo' model:'.$model;
-       echo' Text:'.$txt;
-    $data = http_build_query(array('key'=>$key,
-        'model'=>$model,
-        'txt'=>$txt,
-        'src'=>'sdk - php - 1.2')); // management internal parameter
-    $context = stream_context_create(array('http'=>array(
-        'method'=>'POST',
-        'header'=>
-            'Content - type: application / x - www - form - urlencoded'."\r\n".
-            'Content - Length: '.strlen($data)."\r\n",
-        'content'=>$data)));
-
-    $fd = fopen($api, 'r', false, $context);
-    $response = stream_get_contents($fd);
-    fclose($fd);
-    return $response;
-}
-
-// sendPost
-//*/
-
-
 echo json_encode($post);
