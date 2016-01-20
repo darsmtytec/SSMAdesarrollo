@@ -8,7 +8,7 @@
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: .25em;
-    margin: 1.5px 0px 1.5px 0px !important;
+    margin: 1.5px !important;
 }
 .search-label a{
     color: #fff;

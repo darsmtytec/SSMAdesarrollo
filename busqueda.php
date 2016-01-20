@@ -18,9 +18,9 @@ include 'header.php';
 ==================================-->
 <div id="section-search" class="section">
     <div class="row">
-<!--==============================
-    Config
-==================================-->
+        <!--==============================
+            Config
+        ==================================-->
         <div class="col-md-6">
             <div class="portlet light bordered">
                 <div class="portlet-title">
@@ -35,38 +35,35 @@ include 'header.php';
                             <div class="form-group form-md-line-input has-info form-md-floating-label">
                                 <div class="input-group input-group-lg">
                                     <div class="input-group-control">
-                                        <input type="text" class="form-control">
-                                        <label for="form_control_1">Agrega los términos de búsqueda</label>
+                                        <input id="terms-main-input" type="text" class="form-control">
+                                        <label for="form_control">Agrega los términos de búsqueda</label>
                                     </div>
-                                    <span class="input-group-btn btn-right">
-                                        <button class="btn  blue-madison" type="button">
+                                    <span id="terms-main-btn" class="input-group-btn btn-right">
+                                        <button class="btn green-meadow" type="button">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </span>
                                 </div>
                             </div>
-                            <a id="advanced">Opciones Avanzadas...</a>
+                            <a id="advanced" class="tooltips" data-original-title="Configuraciones de búsqueda extras">Opciones Avanzadas...</a>
                             <!--ADVANCED------------------------------------------------------->
                             <p>
                             </p>
                             <!--SocialIcons--------------------------------------------------->
                             <div id="section-advanced" class="section" style="display: none">
-
-                                <div class="form-group form-md-checkboxes">
-                                    <label>Redes Sociales</label>
+                                    <h4>Redes Sociales</h4>
                                     <div class="socicons">
-                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid bg-green font-white bg-hover-grey-salsa socicon-twitter tooltips" data-original-title="Twitter" aria-describedby="tooltip875444"></a>
-                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid bg-blue-steel font-white bg-hover-grey-salsa socicon-facebook tooltips" data-original-title="Facebook"></a>
-                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid bg-grey-gallery font-white bg-hover-grey-salsa socicon-instagram tooltips" data-original-title="Instagram"></a>
-                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid bg-blue-chambray font-white bg-hover-grey-salsa socicon-tumblr tooltips" data-original-title="Tumblr"></a>
-                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-youtube tooltips" data-original-title="Youtube"></a>
-                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid bg-dark font-white bg-hover-grey-salsa socicon-linkedin tooltips" data-original-title="Linkedin"></a>
-                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-pinterest tooltips" data-original-title="Pinterest"></a>
-                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-google tooltips" data-original-title="Google"></a>
-                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid bg-yellow-gold font-white bg-hover-grey-salsa socicon-blogger tooltips" data-original-title="Blogger"></a>
-                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid bg-red-flamingo font-white bg-hover-grey-salsa socicon-reddit tooltips" data-original-title="Reddit"></a>
+                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-green font-white bg-hover-grey-salsa socicon-twitter tooltips" data-original-title="Twitter"></a>
+                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-blue-steel font-white bg-hover-grey-salsa socicon-facebook tooltips" data-original-title="Facebook"></a>
+                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-grey-gallery font-white bg-hover-grey-salsa socicon-instagram tooltips" data-original-title="Instagram"></a>
+                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-blue-chambray font-white bg-hover-grey-salsa socicon-tumblr tooltips" data-original-title="Tumblr"></a>
+                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-youtube tooltips" data-original-title="Youtube"></a>
+                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-blue-hoki font-white bg-hover-grey-salsa socicon-linkedin tooltips" data-original-title="Linkedin"></a>
+                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-pinterest tooltips" data-original-title="Pinterest"></a>
+                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-google tooltips" data-original-title="Google"></a>
+                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-yellow-gold font-white bg-hover-grey-salsa socicon-blogger tooltips" data-original-title="Blogger"></a>
+                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-red-flamingo font-white bg-hover-grey-salsa socicon-reddit tooltips" data-original-title="Reddit"></a>
                                     </div>
-                                </div>
                                 <!--SocialIcons-->
                                 <div class="form-group form-md-checkboxes">
                                     <label>NSFW (Not Safe for Work)</label>
@@ -85,26 +82,35 @@ include 'header.php';
                                 <p>
                                 </p>
                                 <div class="form-group form-md-line-input has-info">
-                                    <select class="form-control" id="form_control_1">
-                                        <option value="">Se incluyen todas las palabras...</option>
-                                        <option value="">Se incluyen algunas de las palabras...</option>
-                                        <option value="">No se incluyen las palabras...</option>
+                                    <select id="terms-select" class="form-control" id="form_control_1">
+                                        <option class="font-blue-sharp" value="1">Se incluyen todas las palabras...</option>
+                                        <option class="font-yellow-soft" value="2">Se incluyen algunas de las palabras...</option>
+                                        <option class="font-red-intense" value="0">No se incluyen las palabras...</option>
                                     </select>
                                     <label for="form_control_1">Opciones de términos</label>
                                 </div>
                                 <p></p>
                                 <p>
                                 </p>
-                                <div class="form-group form-md-line-input form-md-floating-label">
-                                    <input type="text" class="form-control" id="form_control_2">
-                                    <label for="form_control_1">Agrega los términos de búsqueda</label>
+                                <div class="form-group form-md-line-input has-info form-md-floating-label">
+                                    <div class="input-group input-group-lg">
+                                        <div class="input-group-control">
+                                            <input id="terms-extra-input" type="text" class="form-control">
+                                            <label for="form_control">Agrega los términos de búsqueda</label>
+                                        </div>
+                                    <span id="terms-extra-btn" class="input-group-btn btn-right">
+                                        <button class="btn blue-madison" type="button">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </span>
+                                    </div>
                                 </div>
                                 <p></p>
-                                <div class="form-actions noborder">
-                                    <a class="btn btn-lg btn-primary">
-                                        Buscar <i class="fa fa-search"></i>
-                                    </a>
-                                </div>
+                            </div>
+                            <div class="form-actions noborder">
+                                <a id="search-btn" class="btn btn-lg btn-primary">
+                                    Buscar <i class="fa fa-search"></i>
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -126,22 +132,31 @@ include 'header.php';
                 </div>
                 <div class="portlet-body form">
                     <form role="form">
-                        <div class="form-body">
-                            <ul class="list-inline">
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                                <li class="search-label bg-green font-white">Termino 1 <a class="fa fa-times"></a></li>
-                            </ul>
+                        <div id="terms-global-container" class="form-body">
+                            <div id="terms-main-container">
+                                <h4>Términos de Búsqueda</h4>
+                                <ul id="terms-main-search" class="list-inline">
+                                    <!--li class="search-label bg-green-meadow font-white">Incluye&nbsp;<a class="fa fa-times"></a></li-->
+                                </ul>
+                            </div>
+                            <div id="terms-defo-container" style="display: none;">
+                                <h4>Incluye...</h4>
+                                <ul id="terms-defo-search" class="list-inline">
+                                    <!--li class="search-label bg-blue-sharp font-white">Incluye&nbsp;<a class="fa fa-times"></a></li-->
+                                </ul>
+                            </div>
+                            <div id="terms-maybe-container" style="display: none;">
+                                <h4>Puede contener...</h4>
+                                <ul id="terms-maybe-search" class="list-inline">
+                                    <!--li class="search-label bg-yellow-soft font-white">Contiene&nbsp;<a class="fa fa-times"></a></li-->
+                                </ul>
+                            </div>
+                            <div id="terms-not-container" style="display: none;">
+                                <h4>Se excluye...</h4>
+                                <ul id="terms-not-search" class="list-inline">
+                                    <!--li class="search-label bg-red-intense font-white">Excluido&nbsp;<a class="fa fa-times"></a></li-->
+                                </ul>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -163,41 +178,8 @@ include 'header.php';
                     <div class="portlet light ">
                         <div class="portlet-title">
                             <div class="caption" data-toggle="collapse" data-target=".todo-project-list-content">
-                                <span class="caption-subject font-green-sharp bold uppercase">PROJECTS </span>
-                                <span class="caption-helper visible-sm-inline-block visible-xs-inline-block">click to view project list</span>
-                            </div>
-                            <div class="actions">
-                                <div class="btn-group">
-                                    <a class="btn green btn-circle btn-outline btn-sm todo-projects-config" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                        <i class="icon-settings"></i> &nbsp;
-                                        <i class="fa fa-angle-down"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li>
-                                            <a href="javascript:;"> New Project </a>
-                                        </li>
-                                        <li class="divider"> </li>
-                                        <li>
-                                            <a href="javascript:;"> Pending
-                                                <span class="badge badge-danger"> 4 </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;"> Completed
-                                                <span class="badge badge-success"> 12 </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;"> Overdue
-                                                <span class="badge badge-warning"> 9 </span>
-                                            </a>
-                                        </li>
-                                        <li class="divider"> </li>
-                                        <li>
-                                            <a href="javascript:;"> Archived Projects </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <span class="caption-subject font-green-sharp bold uppercase">REDES SOCIALES </span>
+                                <span class="caption-helper visible-sm-inline-block visible-xs-inline-block">click para ver la lista</span>
                             </div>
                         </div>
                         <div class="portlet-body todo-project-list-content" style="height: auto;">
@@ -205,27 +187,19 @@ include 'header.php';
                                 <ul class="nav nav-stacked">
                                     <li>
                                         <a href="javascript:;">
-                                            <span class="badge badge-info"> 6 </span> AirAsia Ads </a>
+                                            <span class="badge badge-info"> 6 </span> Twitter </a>
                                     </li>
                                     <li>
                                         <a href="javascript:;">
-                                            <span class="badge badge-success"> 2 </span> HSBC Promo </a>
+                                            <span class="badge badge-warning"> 2 </span> Instagram </a>
                                     </li>
                                     <li class="active">
                                         <a href="javascript:;">
-                                            <span class="badge badge-success"> 3 </span> GlobalEx</a>
+                                            <span class="badge badge-danger"> 3 </span> Youtube </a>
                                     </li>
                                     <li>
                                         <a href="javascript:;">
-                                            <span class="badge badge-default"> 14 </span> Empire City </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge badge-info"> 6 </span> AirAsia Ads </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge badge-danger"> 2 </span> Loop Inc Promo </a>
+                                            <span class="badge badge-info"> 14 </span> Facebook </a>
                                     </li>
                                 </ul>
                             </div>
@@ -237,35 +211,25 @@ include 'header.php';
                                 <span class="caption-subject font-red bold uppercase">TAGS </span>
                                 <span class="caption-helper visible-sm-inline-block visible-xs-inline-block">click to view</span>
                             </div>
-                            <div class="actions">
-                                <div class="actions">
-                                    <a class="btn btn-circle grey-salsa btn-outline btn-sm" href="javascript:;">
-                                        <i class="fa fa-plus"></i> Add </a>
-                                </div>
-                            </div>
                         </div>
                         <div class="portlet-body todo-project-list-content todo-project-list-content-tags" style="height: auto;">
                             <div class="todo-project-list">
                                 <ul class="nav nav-pills nav-stacked">
                                     <li>
                                         <a href="javascript:;">
-                                            <span class="badge badge-danger"> 6 </span> Pending </a>
+                                            <span class="badge badge-danger"> 6 </span> #TecMty </a>
                                     </li>
                                     <li>
                                         <a href="javascript:;">
-                                            <span class="badge badge-info"> 2 </span> Completed </a>
+                                            <span class="badge badge-info"> 2 </span> #logo </a>
                                     </li>
                                     <li>
                                         <a href="javascript:;">
-                                            <span class="badge badge-success"> 14 </span> In Progress </a>
+                                            <span class="badge badge-success"> 14 </span> #EXATEC </a>
                                     </li>
                                     <li>
                                         <a href="javascript:;">
-                                            <span class="badge badge-warning"> 6 </span> Closed </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge badge-info"> 2 </span> Delivered </a>
+                                            <span class="badge badge-warning"> 6 </span> #JirafasLocas </a>
                                     </li>
                                 </ul>
                             </div>
@@ -280,37 +244,23 @@ include 'header.php';
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-bar-chart font-green-sharp hide"></i>
-                                <span class="caption-helper">GlobalEx Tasks:</span> &nbsp;
-                                <span class="caption-subject font-green-sharp bold uppercase">Tune Website</span>
+                                <span class="caption-helper">Término Buscado:</span> &nbsp;
+                                <span class="caption-subject font-green-sharp bold uppercase">Tec de Monterrey</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group">
-                                    <a class="btn green btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"> MANAGE
+                                    <a class="btn green btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"> Opciones
                                         <i class="fa fa-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu pull-right">
                                         <li>
-                                            <a href="javascript:;"> New Task </a>
+                                            <a href="javascript:;"> Lista </a>
                                         </li>
                                         <li class="divider"> </li>
                                         <li>
-                                            <a href="javascript:;"> Pending
-                                                <span class="badge badge-danger"> 4 </span>
+                                            <a href="javascript:;"> Exportar
+                                                <span class="label label-danger pull-right"><span class="fa fa-upload"></span></span>
                                             </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;"> Completed
-                                                <span class="badge badge-success"> 12 </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;"> Overdue
-                                                <span class="badge badge-warning"> 9 </span>
-                                            </a>
-                                        </li>
-                                        <li class="divider"> </li>
-                                        <li>
-                                            <a href="javascript:;"> Delete Project </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -341,14 +291,6 @@ include 'header.php';
                                                 <span class="todo-tasklist-badge badge badge-roundless">Important</span>
                                             </div>
                                         </div>
-                                        <div class="todo-tasklist-item todo-tasklist-item-border-green">
-                                            <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar9.jpg" width="27px" height="27px">
-                                            <div class="todo-tasklist-item-title"> Slider Redesign </div>
-                                            <div class="todo-tasklist-controls pull-left">
-                                                                        <span class="todo-tasklist-date">
-                                                                            <i class="fa fa-calendar"></i> 10 Feb 2015 </span>
-                                                <span class="todo-tasklist-badge badge badge-roundless">Important</span>&nbsp; </div>
-                                        </div>
                                         <div class="todo-tasklist-item todo-tasklist-item-border-blue">
                                             <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar6.jpg" width="27px" height="27px">
                                             <div class="todo-tasklist-item-title"> Contact Us Map Location changes </div>
@@ -378,35 +320,6 @@ include 'header.php';
                                                                             <i class="fa fa-calendar"></i> 02 Feb 2015 </span>
                                                 <span class="todo-tasklist-badge badge badge-roundless">Postponed</span>&nbsp; </div>
                                         </div>
-                                        <div class="todo-tasklist-item todo-tasklist-item-border-green">
-                                            <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar9.jpg" width="27px" height="27px">
-                                            <div class="todo-tasklist-item-title"> Slider Redesign </div>
-                                            <div class="todo-tasklist-controls pull-left">
-                                                                        <span class="todo-tasklist-date">
-                                                                            <i class="fa fa-calendar"></i> 10 Feb 2015 </span>
-                                                <span class="todo-tasklist-badge badge badge-roundless">Important</span>&nbsp; </div>
-                                        </div>
-                                        <div class="todo-tasklist-item todo-tasklist-item-border-red">
-                                            <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar5.jpg" width="27px" height="27px">
-                                            <div class="todo-tasklist-item-title"> Homepage Alignments to adjust </div>
-                                            <div class="todo-tasklist-item-text"> Lorem ipsum dolor sit amet, consectetuer dolore psum dolor sit. </div>
-                                            <div class="todo-tasklist-controls pull-left">
-                                                                        <span class="todo-tasklist-date">
-                                                                            <i class="fa fa-calendar"></i> 14 Sep 2014 </span>
-                                                <span class="todo-tasklist-badge badge badge-roundless">Important</span>
-                                            </div>
-                                        </div>
-                                        <div class="todo-tasklist-item todo-tasklist-item-border-blue">
-                                            <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar6.jpg" width="27px" height="27px">
-                                            <div class="todo-tasklist-item-title"> Contact Us Improvement </div>
-                                            <div class="todo-tasklist-item-text"> Lorem ipsum amet, psum dolor sit consectetuer dolore. </div>
-                                            <div class="todo-tasklist-controls pull-left">
-                                                                        <span class="todo-tasklist-date">
-                                                                            <i class="fa fa-calendar"></i> 21 Feb 2015 </span>
-                                                <span class="todo-tasklist-badge badge badge-roundless">Postponed</span>&nbsp;
-                                                <span class="todo-tasklist-badge badge badge-roundless">Primary</span>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="todo-tasklist-devider"> </div>
@@ -418,7 +331,7 @@ include 'header.php';
                                                 <div class="col-md-8 col-sm-8">
                                                     <div class="todo-taskbody-user">
                                                         <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar6.jpg" width="50px" height="50px">
-                                                        <span class="todo-username pull-left">Vanessa Bond</span>
+                                                        <span class="todo-username pull-left">Kevin Estrada</span>
                                                         <button type="button" class="todo-username-btn btn btn-circle btn-default btn-sm">&nbsp;edit&nbsp;</button>
                                                     </div>
                                                 </div>
@@ -432,33 +345,25 @@ include 'header.php';
                                             <!-- TASK TITLE -->
                                             <div class="form-group">
                                                 <div class="col-md-12">
-                                                    <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Task Title..."> </div>
+                                                    <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="@KevinEstrada"> </div>
                                             </div>
                                             <!-- TASK DESC -->
                                             <div class="form-group">
                                                 <div class="col-md-12">
-                                                    <textarea class="form-control todo-taskbody-taskdesc" rows="8" placeholder="Task Description..."></textarea>
+                                                    <textarea class="form-control todo-taskbody-taskdesc" rows="8" placeholder="Trabajando en DARS"></textarea>
                                                 </div>
                                             </div>
                                             <!-- END TASK DESC -->
-                                            <!-- TASK DUE DATE -->
-                                            <div class="form-group">
-                                                <div class="col-md-12">
-                                                    <div class="input-icon">
-                                                        <i class="fa fa-calendar"></i>
-                                                        <input type="text" class="form-control todo-taskbody-due" placeholder="Due Date..."> </div>
-                                                </div>
-                                            </div>
                                             <!-- TASK TAGS -->
                                             <div class="form-group">
                                                 <div class="col-md-12">
-                                                    <select class="form-control todo-taskbody-tags select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                                        <option value="Pending">Pending</option>
-                                                        <option value="Completed">Completed</option>
-                                                        <option value="Testing">Testing</option>
-                                                        <option value="Approved">Approed</option>
-                                                        <option value="Rejected">Rejected</option>
-                                                    </select><span class="select2 select2-container select2-container--bootstrap" dir="ltr" style="width: 483px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-zvtw-container"><span class="select2-selection__rendered" id="select2-zvtw-container" title="Pending">Pending</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                                    <select class="form-control todo-taskbody-tags" tabindex="-1" aria-hidden="true">
+                                                        <option value="Pending">Muy Positivo</option>
+                                                        <option value="Completed">Positivo</option>
+                                                        <option value="Testing">Neutral</option>
+                                                        <option value="Approved">Negativo</option>
+                                                        <option value="Rejected">Muy Negativo</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <!-- TASK TAGS -->
@@ -488,51 +393,22 @@ include 'header.php';
                                                                     <div class="media-body todo-comment">
                                                                         <button type="button" class="todo-comment-btn btn btn-circle btn-default btn-sm">&nbsp; Reply &nbsp;</button>
                                                                         <p class="todo-comment-head">
-                                                                            <span class="todo-comment-username">Christina Aguilera</span> &nbsp;
-                                                                            <span class="todo-comment-date">17 Sep 2014 at 2:05pm</span>
+                                                                            <span class="todo-comment-username">José Carlos</span> &nbsp;
+                                                                            <span class="todo-comment-date">17 Ene 2015 at 2:05pm</span>
                                                                         </p>
-                                                                        <p class="todo-text-color"> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                                                                            turpis. </p>
+                                                                        <p class="todo-text-color"> Mentiroso, no has hecho nada. </p>
                                                                         <!-- Nested media object -->
                                                                         <div class="media">
                                                                             <a class="pull-left" href="javascript:;">
                                                                                 <img class="todo-userpic" src="assets/layouts/layout3/img/avatar4.jpg" width="27px" height="27px"> </a>
                                                                             <div class="media-body">
                                                                                 <p class="todo-comment-head">
-                                                                                    <span class="todo-comment-username">Carles Puyol</span> &nbsp;
-                                                                                    <span class="todo-comment-date">17 Sep 2014 at 4:30pm</span>
+                                                                                    <span class="todo-comment-username">Edgardo Acosta</span> &nbsp;
+                                                                                    <span class="todo-comment-date">17 Ene 2016 at 4:30pm</span>
                                                                                 </p>
-                                                                                <p class="todo-text-color"> Thanks so much my dear! </p>
+                                                                                <p class="todo-text-color"> Muy Cierto, muy cierto </p>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="media">
-                                                                    <a class="pull-left" href="javascript:;">
-                                                                        <img class="todo-userpic" src="assets/layouts/layout3/img/avatar5.jpg" width="27px" height="27px"> </a>
-                                                                    <div class="media-body todo-comment">
-                                                                        <button type="button" class="todo-comment-btn btn btn-circle btn-default btn-sm">&nbsp; Reply &nbsp;</button>
-                                                                        <p class="todo-comment-head">
-                                                                            <span class="todo-comment-username">Andres Iniesta</span> &nbsp;
-                                                                            <span class="todo-comment-date">18 Sep 2014 at 9:22am</span>
-                                                                        </p>
-                                                                        <p class="todo-text-color"> Cras sit amet nibh libero, in gravida nulla. Scelerisque ante sollicitudin commodo Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio,
-                                                                            vestibulum in vulputate at, tempus viverra turpis.
-                                                                            <br> </p>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="media">
-                                                                    <a class="pull-left" href="javascript:;">
-                                                                        <img class="todo-userpic" src="assets/layouts/layout3/img/avatar6.jpg" width="27px" height="27px"> </a>
-                                                                    <div class="media-body todo-comment">
-                                                                        <button type="button" class="todo-comment-btn btn btn-circle btn-default btn-sm">&nbsp; Reply &nbsp;</button>
-                                                                        <p class="todo-comment-head">
-                                                                            <span class="todo-comment-username">Olivia Wilde</span> &nbsp;
-                                                                            <span class="todo-comment-date">18 Sep 2014 at 11:50am</span>
-                                                                        </p>
-                                                                        <p class="todo-text-color"> Cras sit amet nibh libero, in gravida nulla. Scelerisque ante sollicitudin commodo Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio,
-                                                                            vestibulum in vulputate at, tempus viverra turpis.
-                                                                            <br> </p>
                                                                     </div>
                                                                 </li>
                                                             </ul>
