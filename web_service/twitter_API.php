@@ -35,7 +35,7 @@ $topics[] = '';
 $accounts[] ='';
 $post[] = '';
 $showSentiment = 'true';
-$notweets = 1; //cantidad de tweets a mostrar
+$notweets = 2; //cantidad de tweets a mostrar
 
 if (isset($_POST["user"][0]) && $_POST["user"][0] != '') {
     $user = $_POST["user"];
@@ -50,8 +50,8 @@ if (isset($_POST["sentiment"]) && $_POST["sentiment"] != '') {
     $showSentiment = $_POST["sentiment"];
 }
 
-$topico[0] = 'TecdeMonterrey';
-//$user[0]='TecdeMonterrey';
+//$topico[0] = 'TecdeMonterrey';
+$user[0]='TecdeMonterrey';
 
 //<editor-fold desc="Klout">
 // ************* Klout API ***************************
@@ -320,6 +320,7 @@ for ($b = 0; $b < count($topics); $b++) {
             $arraySearch[$b]["foto_perfil"] = $phpArraySearch['statuses'][$a]['user']['profile_image_url'];
             $arraySearch[$b]["cuentas_que_sigue"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['friends_count']);
             $arraySearch[$b]["cuentas_que_lo_siguen"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['followers_count']);
+            $arraySearch[$b]["created_at"] = $phpArraySearch['statuses'][$a]['created_at'];
             $arraySearch[$b]["api"] = 'twitter';
             $arraySearch[$b]["Klout"] = $scoreKlout;
             $arraySearch[$b]["sentimiento"] = $sentiment;
@@ -467,7 +468,7 @@ else if($accounts[0]!='') {
 
                 //<editor-fold desc="Arrego de resultados">
                 $arraySearch[$c]["id_tweet"] =  $phpArrayAccount[$a]['id_str'];
-                $arraySearch[$c]["fecha_tweet"] =$phpArrayAccount[$a]['created_at'];
+                $arraySearch[$c]["created_at"] =$phpArrayAccount[$a]['created_at'];
                 $arraySearch[$c]["text_tweet"] = utf8_encode($phpArrayAccount[$a]['text']);
                 $arraySearch[$c]["text_clean"] = utf8_encode($strText);
                 $arraySearch[$c]["cant_retweet"] =$phpArrayAccount[$a]['retweet_count'];
