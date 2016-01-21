@@ -35,7 +35,7 @@ $topics[] = '';
 $accounts[] ='';
 $post[] = '';
 $showSentiment = 'true';
-$notweets = 2; //cantidad de tweets a mostrar
+$notweets = 20; //cantidad de tweets a mostrar
 
 if (isset($_POST["user"][0]) && $_POST["user"][0] != '') {
     $user = $_POST["user"];
@@ -50,8 +50,8 @@ if (isset($_POST["sentiment"]) && $_POST["sentiment"] != '') {
     $showSentiment = $_POST["sentiment"];
 }
 
-//$topico[0] = 'TecdeMonterrey';
-$user[0]='TecdeMonterrey';
+$topico[0] = 'TecdeMonterrey';
+//$user[0]='TecdeMonterrey';
 
 //<editor-fold desc="Klout">
 // ************* Klout API ***************************
@@ -154,7 +154,7 @@ if($topics[0]!=''){
 for ($b = 0; $b < count($topics); $b++) {
     $tweetsSearch = $connection->get("https://api.twitter.com/1.1/search/tweets.json?q=" . $topics[$b] . "&count=" . $notweets);
     $phpArraySearch = json_decode($tweetsSearch, true);
-    //var_dump($phpArraySearch);
+    var_dump($phpArraySearch);
     if (count($phpArraySearch['statuses']) == 0) {
 
     }
@@ -317,10 +317,30 @@ for ($b = 0; $b < count($topics); $b++) {
             $arraySearch[$b]["id_usuario"] = $phpArraySearch['statuses'][$a]['user']['id'];
             $arraySearch[$b]["nombre_usuario"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['name']);
             $arraySearch[$b]["screen_name"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['screen_name']);
+            $arraySearch[$b]["user_description"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['description']);
             $arraySearch[$b]["foto_perfil"] = $phpArraySearch['statuses'][$a]['user']['profile_image_url'];
             $arraySearch[$b]["cuentas_que_sigue"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['friends_count']);
             $arraySearch[$b]["cuentas_que_lo_siguen"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['followers_count']);
             $arraySearch[$b]["created_at"] = $phpArraySearch['statuses'][$a]['created_at'];
+            $arraySearch[$b]["in_reply_to_status_id"] = utf8_encode($phpArraySearch['statuses'][$a]['in_reply_to_status_id']);
+            $arraySearch[$b]["in_reply_to_screen_name"] = utf8_encode($phpArraySearch['statuses'][$a]['in_reply_to_screen_name']);
+            $arraySearch[$b]["in_reply_to_user_id_str"] = utf8_encode($phpArraySearch['statuses'][$a]['in_reply_to_user_id_str']);
+            $arraySearch[$b]["location"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['location']);
+            if($phpArraySearch['statuses'][$a]['user']['protected']){
+                $arraySearch[$b]["protected"] = "true";
+            }
+            else{
+                $arraySearch[$b]["protected"] = "false";
+
+            }
+            $arraySearch[$b]["friends_count"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['friends_count']);
+            if( $phpArraySearch['statuses'][$a]['user']['verified']){
+                $arraySearch[$b]["verified"] = "true";
+            }
+            else{
+                $arraySearch[$b]["verified"] = "false";
+
+            }
             $arraySearch[$b]["api"] = 'twitter';
             $arraySearch[$b]["Klout"] = $scoreKlout;
             $arraySearch[$b]["sentimiento"] = $sentiment;
@@ -465,6 +485,7 @@ else if($accounts[0]!='') {
                     // si no es RT se coloca el klout del usuario que se busco
                     $scoreKlout = intval($kloutUser);
                 }
+
 
                 //<editor-fold desc="Arrego de resultados">
                 $arraySearch[$c]["id_tweet"] =  $phpArrayAccount[$a]['id_str'];
