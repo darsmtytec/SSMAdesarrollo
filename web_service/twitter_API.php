@@ -107,8 +107,9 @@ if ($word[0] != '') {
 //</editor-fold>
 
 //<editor-fold desc="Sentiment API">
-// ************** Sentiment API ***********************
 //$api = 'http://textalytics.com/core/sentiment-1.1';
+
+//https://www.meaningcloud.com/developer/apis
 
 $api = 'http://api.meaningcloud.com/sentiment-2.0';
 $key[0] = 'e9ce37fc21e2fbfba29bde1d2fbd3b61'; //socialmediadaac@gmail.com

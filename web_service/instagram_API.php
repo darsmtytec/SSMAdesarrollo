@@ -29,6 +29,7 @@ $client_token = '1690894050.79ef585.be4d8e2b93a9448e97d6765ff9542d86';
 $kloutKey = 'hjsske2mer3th85ub6e5bw82';
 
 //<editor-fold desc="Sentiment API">
+//https://www.meaningcloud.com/developer/apis
 
 $api = 'http://api.meaningcloud.com/sentiment-2.0';
 $key[0] = 'e9ce37fc21e2fbfba29bde1d2fbd3b61'; //socialmediadaac@gmail.com
@@ -43,8 +44,6 @@ $key[9] = ''; // Sacar del while
 $txt = '';
 $model = 'auto'; //general_es general_en general_fr auto  // es-general/en-general/fr-general/en-reputation/es-reputation DEPRECATED
 $keyIndex = 0;
-//</editor-fold>
-
 if (isset($_POST["sentiment"]) && $_POST["sentiment"] != '') {
     $showSentiment = $_POST["sentiment"];
 
@@ -73,9 +72,9 @@ function sendPost($api, $key, $model, $txt)
     return $response;
 } // sendPost
 
-//*/
+
 //</editor-fold>
-///////////////////////////////////////////////////
+
 $post[] = '';
 $sentiment = '';
 $showSentiment = true;
@@ -217,23 +216,16 @@ for ($b = 0; $b < count($topics); $b++) {
 
         $arraySearch = [
             "id_post" => $id,
-            "cant_retweet" => $likes,
-            "text_tweet" => '',
+            "likes" => $likes,
             "text_clean" => utf8_encode($instaClean),
             "id_usuario" => $user_id,
             "nombre_usuario" => utf8_encode($user_name),
             "screen_name" => utf8_encode($full_name),
             "foto_perfil" => $profile_pic,
-            "cuentas_que_sigue" => '',
-            "cuentas_que_lo_siguen" => '',
-            "title" => '',
-            "name" => '',
             "description" => utf8_encode($desc),
             "comments" => $comments,
             "url" => $link,
             "location" => $location,
-            "posts" => '',
-            "nsfw" => '',
             "sentiment" => $sentiment,
             "api" => 'instagram'
         ];
