@@ -7,6 +7,8 @@
  */
 
 header("Access-Control-Allow-Origin: *");
+require_once("twitteroauth.php");
+
 
 //<editor-fold desc="Remove accents">
 /**
@@ -26,16 +28,16 @@ function removeAccents($str)
 //</editor-fold>
 
 $b = 0;
-require_once("twitteroauth.php");
 $word[] = '';
-$topico[] ='';
-$user[]= '';
+$topico[] = '';
+$user[] = '';
 $api = '';
 $topics[] = '';
-$accounts[] ='';
+$accounts[] = '';
 $post[] = '';
+$bol = true;
 $showSentiment = 'true';
-$notweets = 20; //cantidad de tweets a mostrar
+$notweets = 1; //cantidad de tweets a mostrar
 
 if (isset($_POST["user"][0]) && $_POST["user"][0] != '') {
     $user = $_POST["user"];
@@ -106,7 +108,9 @@ if ($word[0] != '') {
 
 //<editor-fold desc="Sentiment API">
 // ************** Sentiment API ***********************
+//$api = 'http://textalytics.com/core/sentiment-1.1';
 
+$api = 'http://api.meaningcloud.com/sentiment-2.0';
 $key[0] = 'e9ce37fc21e2fbfba29bde1d2fbd3b61'; //socialmediadaac@gmail.com
 $key[1] = '21089e2646a625584cee07cc52421d24'; //socialmediadaac0@gmail.com
 $key[2] = '2662039e381619d652afa4bd08b11cf0'; //socialmediadaac1@gmail.com
@@ -114,24 +118,22 @@ $key[3] = '247d733eb8fc2c8e8fe8e2f5492f1598'; //socialmediadaac2@gmail.com
 $key[4] = '6e09fa82b045b09fee2e0410baeee945'; //socialmediadaac3@gmail.com
 $key[5] = '91aa5264fa77df2e3c928cce324d6658'; //socialmediadaac4@gmail.com
 $key[6] = 'cf803ded8f0c20d1d3247694afb1a3b2'; //socialmediadaac5@gmail.com
-$key[7] = ''; // Sacar del while
+$key[8] = 'd5af72bc04ee7c663840212cd71edd1a'; //e.acosta@itesm.mx
+
+$key[9] = ''; // Sacar del while
 $txt = '';
-$model = 'auto';//general_es general_en general_fr auto  // es-general/en-general/fr-general/en-reputation/es-reputation DEPRECATED
+$model = 'auto'; //general_es general_en general_fr auto  // es-general/en-general/fr-general/en-reputation/es-reputation DEPRECATED
 $keyIndex = 0;
 //</editor-fold>
 
-// Auxiliary function to make a post request
 
+// Auxiliary function to make a post request
 function sendPost($api, $key, $model, $txt)
 {
-    /* Debug   echo' api:'.$api;
-       echo' key:'.$key;
-       echo' model:'.$model;
-       echo' Text:'.$txt;*/
     $data = http_build_query(array('key' => $key,
         'model' => $model,
         'txt' => $txt,
-        'src' => 'sdk-php-1.2')); // management internal parameter
+        'src' => 'sdk-php-2.0')); // management internal parameter
     $context = stream_context_create(array('http' => array(
         'method' => 'POST',
         'header' =>
@@ -139,154 +141,146 @@ function sendPost($api, $key, $model, $txt)
             'Content-Length: ' . strlen($data) . "\r\n",
         'content' => $data)));
 
-    /*
-              $fd = fopen($api, 'r', false, $context);
-              $response = stream_get_contents($fd);
-              fclose($fd);
-              return $response;
-    */
+    $fd = fopen($api, 'r', false, $context);
+    $response = stream_get_contents($fd);
+    fclose($fd);
+    return $response;
 } // sendPost
-$topics[0]=$topico[0];
-$accounts[0]=$user[0];
 
-if($topics[0]!=''){
 
-for ($b = 0; $b < count($topics); $b++) {
-    $tweetsSearch = $connection->get("https://api.twitter.com/1.1/search/tweets.json?q=" . $topics[$b] . "&count=" . $notweets);
-    $phpArraySearch = json_decode($tweetsSearch, true);
-    var_dump($phpArraySearch);
-    if (count($phpArraySearch['statuses']) == 0) {
+$topics[0] = $topico[0];
+$accounts[0] = $user[0];
 
-    }
-    $count = 0;
-    for ($a = 0; $a < count($phpArraySearch['statuses']); $a++) {
-        if ($phpArraySearch['statuses'] != null && $phpArraySearch['statuses'][$a] != null && $phpArraySearch['statuses'][$a]['id_str'] != '') {
-            $rtImg = false;
-            if ($phpArraySearch['statuses'][$a]['text'][0] == 'R' && $phpArraySearch['statuses'][$a]['text'][1] == 'T' && $phpArraySearch['statuses'][$a]['text'][2] == ' ')
-            {
-                $rtImg = true;
-            }
+if ($topics[0] != '') {
 
-            if ($count <= 30) {
-                $json = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArraySearch['statuses'][$a]['user']['id'] . "?key=" . $kloutKey);
-                $kloutID = json_decode($json, true);
+    for ($b = 0; $b < count($topics); $b++) {
+        $tweetsSearch = $connection->get("https://api.twitter.com/1.1/search/tweets.json?q=" . $topics[$b] . "&count=" . $notweets);
+        $phpArraySearch = json_decode($tweetsSearch, true);
+        //var_dump($phpArraySearch);
+        if (count($phpArraySearch['statuses']) == 0) {
 
-                $json1 = file_get_contents("http://api.klout.com/v2/user.json/" . $kloutID['id'] . "?key=" . $kloutKey);
-                $kloutScore = json_decode($json1, true);
-                $kloutUser = $kloutScore['score']['score'];
-                $scoreKlout = intval($kloutUser);
-            }
-            // esperar unos segundos y volver a realizar las peticiones
-            else {
-                sleep(15);
-                $count = 0;
-                $json = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArraySearch['statuses'][$a]['user']['id'] . "?key=" . $kloutKey);
-                $kloutID = json_decode($json, true);
-
-                $json1 = file_get_contents("http://api.klout.com/v2/user.json/" . $kloutID['id'] . "?key=" . $kloutKey);
-                $kloutScore = json_decode($json1, true);
-                $kloutUser = $kloutScore['score']['score'];
-                $scoreKlout = intval($kloutUser);
-            }
-            $count++;
-
-            if ($showSentiment) {
-
-                $txt = $phpArraySearch['statuses'][$a]['text'];
-
-                $sentiment = '';
-                // We make the request and parse the response to an array
-                $response = sendPost($api, $key[$keyIndex], $model, $txt);
-
-                $json = json_decode($response, true);
-                if (isset($json['status']) && isset($json['status']['code'])) {
-                    if ($json['status']['code'] == '0') {
-
-                        $sentiment = $json['score_tag'];
-                        switch ($json['score_tag']) {
-                            case "P+":
-                                $sentiment = 'P+';
-                                break;
-                            case "P":
-                                $sentiment = 'P';
-                                break;
-                            case "NEU":
-                                $sentiment = 'NEU';
-                                break;
-                            case "N":
-                                $sentiment = 'N';
-                                break;
-                            case "N+":
-                                $sentiment = 'N+';
-                                break;
-                            case "NONE":
-                                $sentiment = 'NONE';
-                                break;
-                        }
-                    }
-                    // 102: You have exceeded the maximum number of credits per month
-                    elseif ($json['status']['code'] == '102' || $json['status']['code'] == '101') {
-                        $var = true;
-                        while ($var):
-                            $keyIndex++;
-                            // We make the request AGAIN WITH NEW KEY and parse the response to an array
-                            $response = sendPost($api, $key[$keyIndex], $model, $txt);
-                            $json = json_decode($response, true);
-                            if (isset($json['status']) && isset($json['status']['code'])) {
-
-                                if (isset($json['score']) && $json['status']['code'] == '0') {
-                                    $sentiment = $json['score_tag'];
-                                    $var = false;
-                                }
-                                else if ($json['status']['code'] == '102') {
-                                    // nothing to do...while continue
-                                }
-                                elseif ($json['status']['code'] == '100') { // Servicio denegado
-                                    $var = false;
-                                }
-                                else {
-                                }
-                            }
-                        endwhile;
-                    }
-                    elseif ($json['status']['code'] == '100' || $json['status']['code'] == '202' || $json['status']['code'] == '203') {
-                        //echo '<br> Sentimiento: No disponible.';
-                        $sentiment = 'No disponible';
-                    }
-                    elseif ($json['status']['code'] == '103') {
-                        $sentiment = 'No disponible';
-                        //echo '<br> Request too large.';
-                    }
-                    elseif ($json['status']['code'] == '104') {
-                        //echo '<br> Request rate limit exceeded.';
-                    }
-                    elseif ($json['status']['code'] == '200') {
-                        //echo '<br> Par�metro faltante.';
-                    }
-                    elseif ($json['status']['code'] == '201' || $json['status']['code'] == '204') {
-                        //echo '<br> Lenguaje no soportado.';
-                    }
-                    else {
-                        //echo '<br> Sentimiento: Neutral'; // No determino sentimiento positivo/negativo
-                        //echo 'Sentimiento: <span class="label label-default">Neutral</span>';
-                    }
-                    //Ver la manera de mandar un email a los admin, avisando de la expiraci�n de la licencia.
-                    // 101: The license has expire
-                    /*
-                        0: OK -- Listo
-                        100: Operation denied -- Listo
-                        101: License expired -- Listo
-                        102: Credits per suscription exceeded -- Listo
-                        103: Request too large -- Listo
-                        104: Request rate limit exceeded
-                        200: Missing required parameter(s) - [name of the parameter]
-                        201: Model not supported
-                        202: Engine internal error
-                        203: Cannot connect to service
-                        204: Model not suitable for the identified text language
-                    */
+        }
+        $count = 0;
+        for ($a = 0; $a < count($phpArraySearch['statuses']); $a++) {
+            if ($phpArraySearch['statuses'] != null && $phpArraySearch['statuses'][$a] != null && $phpArraySearch['statuses'][$a]['id_str'] != '') {
+                $rtImg = false;
+                if ($phpArraySearch['statuses'][$a]['text'][0] == 'R' && $phpArraySearch['statuses'][$a]['text'][1] == 'T' && $phpArraySearch['statuses'][$a]['text'][2] == ' ') {
+                    $rtImg = true;
                 }
-            }
+
+                if ($count <= 30) {
+                    $json = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArraySearch['statuses'][$a]['user']['id'] . "?key=" . $kloutKey);
+                    $kloutID = json_decode($json, true);
+
+                    $json1 = file_get_contents("http://api.klout.com/v2/user.json/" . $kloutID['id'] . "?key=" . $kloutKey);
+                    $kloutScore = json_decode($json1, true);
+                    $kloutUser = $kloutScore['score']['score'];
+                    $scoreKlout = intval($kloutUser);
+                } // esperar unos segundos y volver a realizar las peticiones
+                else {
+                    sleep(15);
+                    $count = 0;
+                    $json = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArraySearch['statuses'][$a]['user']['id'] . "?key=" . $kloutKey);
+                    $kloutID = json_decode($json, true);
+
+                    $json1 = file_get_contents("http://api.klout.com/v2/user.json/" . $kloutID['id'] . "?key=" . $kloutKey);
+                    $kloutScore = json_decode($json1, true);
+                    $kloutUser = $kloutScore['score']['score'];
+                    $scoreKlout = intval($kloutUser);
+                }
+                $count++;
+
+                if ($showSentiment) {
+
+                    $txt = $phpArraySearch['statuses'][$a]['text'];
+
+                    $sentiment = '';
+
+                    $response = sendPost($api, $key[$keyIndex], $model, $txt);
+                    $json = json_decode($response, true);
+                    //$json['status']['remaining_credits'] //Creditos restantes
+                    if (isset($json['status']) && isset($json['status']['code'])) {
+                        if ($json['status']['code'] == '0') {
+
+                            $sentiment = $json['score_tag'];
+                            $mod =$json['model'];
+                            switch ($json['score_tag']) {
+                                case "P+":
+                                    $sentiment = 'P+';
+                                    break;
+                                case "P":
+                                    $sentiment = 'P';
+                                    break;
+                                case "NEU":
+                                    $sentiment = 'NEU';
+                                    break;
+                                case "N":
+                                    $sentiment = 'N';
+                                    break;
+                                case "N+":
+                                    $sentiment = 'N+';
+                                    break;
+                                case "NONE":
+                                    $sentiment = 'NONE';
+                                    break;
+                            }
+                        } // 102: You have exceeded the maximum number of credits per month
+                        elseif ($json['status']['code'] == '102' || $json['status']['code'] == '101') {
+                            $var = true;
+                            while ($var):
+                                $keyIndex++;
+                                // We make the request AGAIN WITH NEW KEY and parse the response to an array
+                                $response = sendPost($api, $key[$keyIndex], $model, $txt);
+                                $json = json_decode($response, true);
+                                if (isset($json['status']) && isset($json['status']['code'])) {
+
+                                    if (isset($json['score']) && $json['status']['code'] == '0') {
+                                        $sentiment = $json['score_tag'];
+                                        $var = false;
+                                    } else if ($json['status']['code'] == '102') {
+                                        // nothing to do...while continue
+                                    } elseif ($json['status']['code'] == '100') { // Servicio denegado
+                                        $var = false;
+                                    } else {
+                                    }
+                                }
+                            endwhile;
+                        } elseif ($json['status']['code'] == '100' || $json['status']['code'] == '202' || $json['status']['code'] == '203') {
+                            //echo '<br> Sentimiento: No disponible.';
+                            $sentiment = 'No disponible';
+                        } elseif ($json['status']['code'] == '103') {
+                            $sentiment = 'Request too large.';
+                            //echo '<br> Request too large.';
+                        } elseif ($json['status']['code'] == '104') {
+                            //echo '<br> Request rate limit exceeded.';
+                            $sentiment = 'Request rate limit exceeded.';
+                        } elseif ($json['status']['code'] == '200') {
+                            //echo '<br> Par�metro faltante.';
+                            $sentiment = ' Parametro faltante.';
+                        } elseif ($json['status']['code'] == '201' || $json['status']['code'] == '204') {
+                            //echo '<br> Lenguaje no soportado.';
+                            $sentiment = 'Lenguaje no soportado.';
+                        } else {
+                            $sentiment = 'Neutral';
+                        }
+                        // 101: The license has expire
+                        /*
+                            0: OK -- Listo
+                            100: Operation denied -- Listo
+                            101: License expired -- Listo
+                            102: Credits per suscription exceeded -- Listo
+                            103: Request too large -- Listo
+                            104: Request rate limit exceeded
+                            200: Missing required parameter(s) - [name of the parameter]
+                            201: Model not supported
+                            202: Engine internal error
+                            203: Cannot connect to service
+                            204: Model not suitable for the identified text language
+                        */
+                    }
+
+                }
+
 
             //<editor-fold desc="Clean text">
             $strText = '';
@@ -303,8 +297,7 @@ for ($b = 0; $b < count($topics); $b++) {
                 $kloutScore = json_decode($json1, true);
                 $kloutRT = $kloutScore['score']['score'];
                 $scoreKlout = intval($kloutRT);
-            }
-            else {
+            } else {
                 // si no es RT se coloca el klout del usuario que se busco
                 $scoreKlout = intval($kloutUser);
             }
@@ -326,27 +319,26 @@ for ($b = 0; $b < count($topics); $b++) {
             $arraySearch[$b]["in_reply_to_screen_name"] = utf8_encode($phpArraySearch['statuses'][$a]['in_reply_to_screen_name']);
             $arraySearch[$b]["in_reply_to_user_id_str"] = utf8_encode($phpArraySearch['statuses'][$a]['in_reply_to_user_id_str']);
             $arraySearch[$b]["location"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['location']);
-            if($phpArraySearch['statuses'][$a]['user']['protected']){
+            if ($phpArraySearch['statuses'][$a]['user']['protected']) {
                 $arraySearch[$b]["protected"] = "true";
-            }
-            else{
+            } else {
                 $arraySearch[$b]["protected"] = "false";
 
             }
             $arraySearch[$b]["friends_count"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['friends_count']);
-            if( $phpArraySearch['statuses'][$a]['user']['verified']){
+            if ($phpArraySearch['statuses'][$a]['user']['verified']) {
                 $arraySearch[$b]["verified"] = "true";
-            }
-            else{
+            } else {
                 $arraySearch[$b]["verified"] = "false";
 
             }
             $arraySearch[$b]["api"] = 'twitter';
             $arraySearch[$b]["Klout"] = $scoreKlout;
+            $arraySearch[$b]["model"] = $mod;
             $arraySearch[$b]["sentimiento"] = $sentiment;
             //</editor-fold>
 
-            array_push($post,$arraySearch);
+            array_push($post, $arraySearch);
             $b++;
         }
     }
@@ -355,7 +347,8 @@ for ($b = 0; $b < count($topics); $b++) {
 
 echo json_encode($arraySearch);
 }
-else if($accounts[0]!='') {
+else
+if ($accounts[0] != '') {
 
     for ($c = 0; $c < count($accounts); $c++) {
         $tweetsAccount = $connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" . $accounts[$c] . "&count=" . $notweets);
@@ -405,7 +398,7 @@ else if($accounts[0]!='') {
                             $sentiment = $json['score_tag'];
                             switch ($json['score_tag']) {
                                 case "P+":
-                                   break;
+                                    break;
                                 case "P":
 
                                     break;
@@ -419,8 +412,7 @@ else if($accounts[0]!='') {
 
                                     break;
                             }
-                        }
-                        elseif ($json['status']['code'] == '102' || $json['status']['code'] == '101') { // 102: You have exceeded the maximum number of credits per month
+                        } elseif ($json['status']['code'] == '102' || $json['status']['code'] == '101') { // 102: You have exceeded the maximum number of credits per month
                             $var = true;
                             while ($var):
                                 $keyIndex++;
@@ -480,41 +472,39 @@ else if($accounts[0]!='') {
                     $kloutScore = json_decode($json1, true);
                     $kloutRT = $kloutScore['score']['score'];
                     $scoreKlout = intval($kloutRT);
-                }
-                else {
+                } else {
                     // si no es RT se coloca el klout del usuario que se busco
                     $scoreKlout = intval($kloutUser);
                 }
 
 
                 //<editor-fold desc="Arrego de resultados">
-                $arraySearch[$c]["id_tweet"] =  $phpArrayAccount[$a]['id_str'];
-                $arraySearch[$c]["created_at"] =$phpArrayAccount[$a]['created_at'];
+                $arraySearch[$c]["id_tweet"] = $phpArrayAccount[$a]['id_str'];
+                $arraySearch[$c]["created_at"] = $phpArrayAccount[$a]['created_at'];
                 $arraySearch[$c]["text_tweet"] = utf8_encode($phpArrayAccount[$a]['text']);
                 $arraySearch[$c]["text_clean"] = utf8_encode($strText);
-                $arraySearch[$c]["cant_retweet"] =$phpArrayAccount[$a]['retweet_count'];
+                $arraySearch[$c]["cant_retweet"] = $phpArrayAccount[$a]['retweet_count'];
                 $arraySearch[$c]["cant_favoritos"] = $phpArrayAccount[$a]['favorite_count'];
-                $arraySearch[$c]["geolocalizacion"] =$phpArrayAccount[$a]['geo'];
+                $arraySearch[$c]["geolocalizacion"] = $phpArrayAccount[$a]['geo'];
                 $arraySearch[$c]["id_usuario"] = $phpArrayAccount[$a]['user']['id_str'];
-                $arraySearch[$c]["nombre_usuario"] =$phpArrayAccount[$a]['user']['name'];
+                $arraySearch[$c]["nombre_usuario"] = $phpArrayAccount[$a]['user']['name'];
                 $arraySearch[$c]["screen_name"] = $phpArrayAccount[$a]['user']['screen_name'];
-                $arraySearch[$c]["imagen_perfil"] =$phpArrayAccount[$a]['user']['profile_image_url'] ;
-                $arraySearch[$c]["usuario_desde"] =$phpArrayAccount[$a]['user']['screen_name'];
-                $arraySearch[$c]["cuentas_que_sigue"] =$phpArrayAccount[$a]['user']['friends_count'];
-                $arraySearch[$c]["cuentas_que_lo_siguen"] =$phpArrayAccount[$a]['user']['followers_count'];
-                $arraySearch[$c]["cuenta_privada"] =$phpArrayAccount[$a]['user']['protected'];
+                $arraySearch[$c]["imagen_perfil"] = $phpArrayAccount[$a]['user']['profile_image_url'];
+                $arraySearch[$c]["usuario_desde"] = $phpArrayAccount[$a]['user']['screen_name'];
+                $arraySearch[$c]["cuentas_que_sigue"] = $phpArrayAccount[$a]['user']['friends_count'];
+                $arraySearch[$c]["cuentas_que_lo_siguen"] = $phpArrayAccount[$a]['user']['followers_count'];
+                $arraySearch[$c]["cuenta_privada"] = $phpArrayAccount[$a]['user']['protected'];
                 $arraySearch[$c]["api"] = 'twitter';
                 $arraySearch[$c]["Klout"] = $scoreKlout;
                 $arraySearch[$c]["sentimiento"] = $sentiment;
                 //</editor-fold>
-                array_push($post,$arraySearch);
+                array_push($post, $arraySearch);
                 $c++;
 
                 //$coll->insert($array);
                 //$coll->ensureIndex(array('id_tweet' => 1), array('unique' => 1, 'dropDups' => 1));
-            }
-            else {
-                $response["msg"]="No existe resultado para mostrar";
+            } else {
+                $response["msg"] = "No existe resultado para mostrar";
                 //echo '<div id="alertBox" class="alert alert-danger" role="alert" style="display:block">No existen resultados para mostrar.</div>';
             }
         }
@@ -524,8 +514,7 @@ else if($accounts[0]!='') {
     echo json_encode($post);
 
 
-}
-else{
-    $response['msg']= "error en la busqueda";
+} else {
+    $response['msg'] = "error en la busqueda";
     json_encode($response);
 }

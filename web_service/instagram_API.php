@@ -30,6 +30,7 @@ $kloutKey = 'hjsske2mer3th85ub6e5bw82';
 
 //<editor-fold desc="Sentiment API">
 
+$api = 'http://api.meaningcloud.com/sentiment-2.0';
 $key[0] = 'e9ce37fc21e2fbfba29bde1d2fbd3b61'; //socialmediadaac@gmail.com
 $key[1] = '21089e2646a625584cee07cc52421d24'; //socialmediadaac0@gmail.com
 $key[2] = '2662039e381619d652afa4bd08b11cf0'; //socialmediadaac1@gmail.com
@@ -37,11 +38,12 @@ $key[3] = '247d733eb8fc2c8e8fe8e2f5492f1598'; //socialmediadaac2@gmail.com
 $key[4] = '6e09fa82b045b09fee2e0410baeee945'; //socialmediadaac3@gmail.com
 $key[5] = '91aa5264fa77df2e3c928cce324d6658'; //socialmediadaac4@gmail.com
 $key[6] = 'cf803ded8f0c20d1d3247694afb1a3b2'; //socialmediadaac5@gmail.com
-$key[7] = ''; // Sacar del while
+$key[8] = 'd5af72bc04ee7c663840212cd71edd1a'; //e.acosta@itesm.mx
+$key[9] = ''; // Sacar del while
 $txt = '';
-$model = 'auto';//general_es general_en general_fr auto  // es-general/en-general/fr-general/en-reputation/es-reputation DEPRECATED
+$model = 'auto'; //general_es general_en general_fr auto  // es-general/en-general/fr-general/en-reputation/es-reputation DEPRECATED
 $keyIndex = 0;
-$showSentiment = false;
+//</editor-fold>
 
 if (isset($_POST["sentiment"]) && $_POST["sentiment"] != '') {
     $showSentiment = $_POST["sentiment"];
@@ -52,37 +54,31 @@ if (isset($_POST["sentiment"]) && $_POST["sentiment"] != '') {
 }
 
 // Auxiliary function to make a post request
-function sendPost($api, $key, $model, $txt) {
-    //  echo' api:'.$api;
-    /* Debug
-       echo' key:'.$key;
-       echo' model:'.$model;
-       echo' Text:'.$txt;
-    */
-    $data = http_build_query(array('key'=>$key,
-        'model'=>$model,
-        'txt'=>$txt,
-        'src'=>'sdk - php - 1.2')); // management internal parameter
-    $context = stream_context_create(array('http'=>array(
-        'method'=>'POST',
-        'header'=>
-            'Content - type: application / x - www - form - urlencoded'."\r\n".
-            'Content - Length: '.strlen($data)."\r\n",
-        'content'=>$data)));
+function sendPost($api, $key, $model, $txt)
+{
+    $data = http_build_query(array('key' => $key,
+        'model' => $model,
+        'txt' => $txt,
+        'src' => 'sdk-php-2.0')); // management internal parameter
+    $context = stream_context_create(array('http' => array(
+        'method' => 'POST',
+        'header' =>
+            'Content-type: application/x-www-form-urlencoded' . "\r\n" .
+            'Content-Length: ' . strlen($data) . "\r\n",
+        'content' => $data)));
 
     $fd = fopen($api, 'r', false, $context);
     $response = stream_get_contents($fd);
     fclose($fd);
     return $response;
+} // sendPost
 
-}
-
-// sendPost
 //*/
 //</editor-fold>
 ///////////////////////////////////////////////////
 $post[] = '';
 $sentiment = '';
+$showSentiment = true;
 //$topics= $_POST["topic"];
 $topics[0] = "TecdeMonterrey";
 
@@ -95,12 +91,14 @@ for ($b = 0; $b < count($topics); $b++) {
     $posts = json_decode($json1, true);
     $children = $posts['data'];
     //var_dump($children);
+    //echo json_encode($children);
 
     foreach ($children as $child) {
 
         if ($showSentiment) {
 
-            $txt = $children['caption']['text'];
+            $txt =  $child['caption']['text'];
+            //echo $children['caption']['text'];
 
             $sentiment = '';
             // We make the request and parse the response to an array
@@ -135,7 +133,7 @@ for ($b = 0; $b < count($topics); $b++) {
                 // 102: You have exceeded the maximum number of credits per month
                 elseif ($json['status']['code'] == '102' || $json['status']['code'] == '101') {
                     $var = true;
-                    while ($var):
+                    while ($var) {
                         $keyIndex++;
                         // We make the request AGAIN WITH NEW KEY and parse the response to an array
                         $response = sendPost($api, $key[$keyIndex], $model, $txt);
@@ -145,37 +143,32 @@ for ($b = 0; $b < count($topics); $b++) {
                             if (isset($json['score']) && $json['status']['code'] == '0') {
                                 $sentiment = $json['score_tag'];
                                 $var = false;
-                            }
-                            else if ($json['status']['code'] == '102') {
+                            } else if ($json['status']['code'] == '102') {
                                 // nothing to do...while continue
-                            }
-                            elseif ($json['status']['code'] == '100') { // Servicio denegado
+                            } elseif ($json['status']['code'] == '100') { // Servicio denegado
                                 $var = false;
-                            }
-                            else {
+                            } else {
                             }
                         }
-                    endwhile;
+                    }//endwhile;
                 }
                 elseif ($json['status']['code'] == '100' || $json['status']['code'] == '202' || $json['status']['code'] == '203') {
-                    //echo '<br> Sentimiento: No disponible.';
                     $sentiment = 'No disponible';
                 }
                 elseif ($json['status']['code'] == '103') {
-                    $sentiment = 'No disponible';
-                    //echo '<br> Request too large.';
+                    $sentiment = 'Request too large.';
                 }
                 elseif ($json['status']['code'] == '104') {
-                    //echo '<br> Request rate limit exceeded.';
+                    $sentiment=' Request rate limit exceeded.';
                 }
                 elseif ($json['status']['code'] == '200') {
-                    //echo '<br> Par�metro faltante.';
+                    $sentiment='Parametro faltante.';
                 }
                 elseif ($json['status']['code'] == '201' || $json['status']['code'] == '204') {
-                    //echo '<br> Lenguaje no soportado.';
+                    $sentiment= 'Lenguaje no soportado.';
                 }
                 else {
-                    //echo '<br> Sentimiento: Neutral'; // No determino sentimiento positivo/negativo
+                    $sentiment= 'NEU'; // No determino sentimiento positivo/negativo
                     //echo 'Sentimiento: <span class="label label-default">Neutral</span>';
                 }
                 //Ver la manera de mandar un email a los admin, avisando de la expiraci�n de la licencia.
@@ -201,7 +194,8 @@ for ($b = 0; $b < count($topics); $b++) {
         $id = $child['id'];
         $type = $child['type'];
         $desc = $child['caption']['text'];
-        $location = $child['location'];
+        $location = $child['location'];//latitude, name,longitude,id
+        $comments=$child['comments'];//,$children["comments"]["data"]"text":"@jerry_vzz @rogeliodlgg @emmanuelsm95 muy buena \ud83d\udc4c\ud83c\udffc",  "from":{  "username":"gmunozdiego","profile_picture":"https:\/\/scontent.cdninstagram.com\/hphotos-xaf1\/t51.2885-19\/s150x150\/12357627_555854394569519_142841922_a.jpg","id":"218239359","full_name":"Guillermo Mu\u00f1oz-Diego" },
         $created = $child['created_time'];
         $likes = $child['likes']['count'];
         $thumbnail = $child['images']['thumbnail'];
@@ -235,6 +229,7 @@ for ($b = 0; $b < count($topics); $b++) {
             "title" => '',
             "name" => '',
             "description" => utf8_encode($desc),
+            "comments" => $comments,
             "url" => $link,
             "location" => $location,
             "posts" => '',
@@ -245,7 +240,7 @@ for ($b = 0; $b < count($topics); $b++) {
 
         array_push($post, $arraySearch);
 
-        // $coll->insert($arraySearch);
+        $coll->insert($arraySearch);
 
     }
 }
