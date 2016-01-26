@@ -6,103 +6,32 @@
  * Time: 03:17 PM
  */
 
-function removeAccents($str)
-{
-    $a = array('�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '�', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '�', '�', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '�', '�', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '�', '?', '?', '?', '?', '�', '�', '?', '�', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?');
-    $b = array('A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's', 'a', 'a', 'a', 'a', 'a', 'a', 'ae', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y', 'A', 'a', 'A', 'a', 'A', 'a', 'C', 'c', 'C', 'c', 'C', 'c', 'C', 'c', 'D', 'd', 'D', 'd', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'G', 'g', 'G', 'g', 'G', 'g', 'G', 'g', 'H', 'h', 'H', 'h', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'IJ', 'ij', 'J', 'j', 'K', 'k', 'L', 'l', 'L', 'l', 'L', 'l', 'L', 'l', 'l', 'l', 'N', 'n', 'N', 'n', 'N', 'n', 'n', 'O', 'o', 'O', 'o', 'O', 'o', 'OE', 'oe', 'R', 'r', 'R', 'r', 'R', 'r', 'S', 's', 'S', 's', 'S', 's', 'S', 's', 'T', 't', 'T', 't', 'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w', 'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A', 'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A', 'a', 'AE', 'ae', 'O', 'o', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?');
+//<editor-fold desc="Remove accents">
+/**
+ * Replace accented characters with non accented
+ *
+ * @param $str
+ * @return mixed
+ * @link http://myshadowself.com/coding/php-function-to-convert-accented-characters-to-their-non-accented-equivalant/
+ */
+function removeAccents($str) {
+    $a = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ', 'Ά', 'ά', 'Έ', 'έ', 'Ό', 'ό', 'Ώ', 'ώ', 'Ί', 'ί', 'ϊ', 'ΐ', 'Ύ', 'ύ', 'ϋ', 'ΰ', 'Ή', 'ή');
+    $b = array('A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's', 'a', 'a', 'a', 'a', 'a', 'a', 'ae', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y', 'A', 'a', 'A', 'a', 'A', 'a', 'C', 'c', 'C', 'c', 'C', 'c', 'C', 'c', 'D', 'd', 'D', 'd', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'G', 'g', 'G', 'g', 'G', 'g', 'G', 'g', 'H', 'h', 'H', 'h', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'IJ', 'ij', 'J', 'j', 'K', 'k', 'L', 'l', 'L', 'l', 'L', 'l', 'L', 'l', 'l', 'l', 'N', 'n', 'N', 'n', 'N', 'n', 'n', 'O', 'o', 'O', 'o', 'O', 'o', 'OE', 'oe', 'R', 'r', 'R', 'r', 'R', 'r', 'S', 's', 'S', 's', 'S', 's', 'S', 's', 'T', 't', 'T', 't', 'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w', 'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A', 'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A', 'a', 'AE', 'ae', 'O', 'o', 'Α', 'α', 'Ε', 'ε', 'Ο', 'ο', 'Ω', 'ω', 'Ι', 'ι', 'ι', 'ι', 'Υ', 'υ', 'υ', 'υ', 'Η', 'η');
     return str_replace($a, $b, $str);
 }
+//</editor-fold>
+
 $client_id = '79ef585f61934698943db989482d7258';
 $client_secret = 'b9fd07119f7c4424ab90b7d98c37c9bd';
 $client_token = '1690894050.79ef585.be4d8e2b93a9448e97d6765ff9542d86';
 
 // ************* Klout API ***************************
 $kloutKey = 'hjsske2mer3th85ub6e5bw82';
-///////////////////////////////////////////////////
-$post[]='';
-//$json = file_get_contents("https://instagram.com/oauth/authorize/?client_id=79ef585f61934698943db989482d7258&redirect_uri=http://10.2.27.52/modx/index.php&response_type=token");
 
-$topics[0] = "semanai";
+//<editor-fold desc="Sentiment API">
+//https://www.meaningcloud.com/developer/apis
 
-/************INSTAGRAM API**///////////////////////
-
-for ($b = 0; $b < count($topics); $b++) {
-   // echo '<br><STRONG>Instagram Search:</STRONG> ' . $topics[$b] . ' <br><br>';
-    //$json1 = file_get_contents("https://api.instagram.com/v1/media/popular?client_id=".$client_id); Most popular posts
-    $json1 = file_get_contents("https://api.instagram.com/v1/tags/" . $topics[$b] . "/media/recent?client_id=" . $client_id);
-    $posts = json_decode($json1, true);
-    $children = $posts['data'];
-
-    foreach ($children as $child) {
-        $id = $child['id'];
-        $type = $child['type'];
-        $desc = $child['caption']['text'];
-        $location = $child['location'];
-        $created = $child['created_time'];
-        $likes = $child['likes']['count'];
-        $thumbnail = $child['images']['thumbnail'];
-        $link = $child['link'];
-        $user_id = $child['user']['id'];
-        $user_name = $child['user']['username'];
-        $full_name = $child['user']['full_name'];
-        //$website = $child['user']['website'];
-        $profile_pic = $child['user']['profile_picture'];
-       // echo ($user_id);
-
-
-        //echo "<div>Descripcion: " . $desc . "<br/> Usuario:" . $full_name . "<div class='embed-container'><iframe src='" . $link . "embed/' frameborder='0' scrolling='no' allowtransparency='true'></iframe></div></div>";
-
-
-
-        //limpieza instagram
-        $instaClean = '';
-        if ($child['caption']['text'] != null && $child['caption']['text'] != '') {
-            $instaClean = removeAccents($child['caption']['text']);
-        }
-
-        $arraySearch = [
-            "id_tweet" => $id,
-            "cant_retweet" => $likes,
-            "text_tweet" => '',
-            "text_clean" => utf8_encode($instaClean),
-            "id_usuario" => $user_id,
-            "nombre_usuario" => utf8_encode($user_name),
-            "screen_name" => utf8_encode($full_name),
-            "foto_perfil" => $profile_pic,
-            "cuentas_que_sigue" => '',
-            "cuentas_que_lo_siguen" => '',
-            "title" => '',
-            "name" => '',
-            "description" => utf8_encode($desc),
-            "url" => $link,
-            "posts" => '',
-            "nsfw" => '',
-            "api" => 'instagram'
-        ];
-
-        array_push($post,$arraySearch);
-
-        // $coll->insert($arraySearch);
-
-    }
-}
-// http://instagram.com/p/y78iHVmO1q test
-
-// TEST -- DELETE echo "<div class='width:50%'><div class='embed-container'><iframe src='//instagram.com/p/y78iHVmO1q/embed/' frameborder='0' scrolling='no' allowtransparency='true'></iframe></div></div>";
-/* embed Instagram - echo '<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4"
-    style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px;
-    padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
-    <div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;">
-    <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC);
-        display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div>
-        <p style=" margin:8px 0 0 0; padding:0 4px;">
-        <a href="https://instagram.com/p/y-n2McypKz/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal;
-        font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">Aprendiendo nuevos trucos #Router #ITESM #CampusLaguna</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">Una foto publicada por ihanelly (@ihanellyhdz) el <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-02-11T22:57:50+00:00">11 de Feb de 2015 a la(s) 2:57 PST</time></p></div></blockquote>
-<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>'; DELETE */
-///////////////************************************////////////////////////
-
-// ************** Sentiment API ***********************
-
+$api = 'http://api.meaningcloud.com/sentiment-2.0';
 $key[0] = 'e9ce37fc21e2fbfba29bde1d2fbd3b61'; //socialmediadaac@gmail.com
 $key[1] = '21089e2646a625584cee07cc52421d24'; //socialmediadaac0@gmail.com
 $key[2] = '2662039e381619d652afa4bd08b11cf0'; //socialmediadaac1@gmail.com
@@ -110,32 +39,32 @@ $key[3] = '247d733eb8fc2c8e8fe8e2f5492f1598'; //socialmediadaac2@gmail.com
 $key[4] = '6e09fa82b045b09fee2e0410baeee945'; //socialmediadaac3@gmail.com
 $key[5] = '91aa5264fa77df2e3c928cce324d6658'; //socialmediadaac4@gmail.com
 $key[6] = 'cf803ded8f0c20d1d3247694afb1a3b2'; //socialmediadaac5@gmail.com
-$key[7] = ''; // Sacar del while
+$key[8] = 'd5af72bc04ee7c663840212cd71edd1a'; //e.acosta@itesm.mx
+$key[9] = ''; // Sacar del while
 $txt = '';
-$model = 'auto';//general_es general_en general_fr auto  // es-general/en-general/fr-general/en-reputation/es-reputation DEPRECATED
+$model = 'auto'; //general_es general_en general_fr auto  // es-general/en-general/fr-general/en-reputation/es-reputation DEPRECATED
 $keyIndex = 0;
-$showSentiment = false;
-/*
-if($_POST["sentiment"] == 'true'){
-    $showSentiment = true;
+if (isset($_POST["sentiment"]) && $_POST["sentiment"] != '') {
+    $showSentiment = $_POST["sentiment"];
+
+    if($showSentiment == 'true'){
+        $showSentiment = true;
+    }
 }
+
 // Auxiliary function to make a post request
-function sendPost($api, $key, $model, $txt) {
-    //  echo' api:'.$api;
-    /* Debug
-       echo' key:'.$key;
-       echo' model:'.$model;
-       echo' Text:'.$txt;*
-    $data = http_build_query(array('key'=>$key,
-        'model'=>$model,
-        'txt'=>$txt,
-        'src'=>'sdk-php-1.2')); // management internal parameter
-    $context = stream_context_create(array('http'=>array(
-        'method'=>'POST',
-        'header'=>
-            'Content-type: application/x-www-form-urlencoded'."\r\n".
-            'Content-Length: '.strlen($data)."\r\n",
-        'content'=>$data)));
+function sendPost($api, $key, $model, $txt)
+{
+    $data = http_build_query(array('key' => $key,
+        'model' => $model,
+        'txt' => $txt,
+        'src' => 'sdk-php-2.0')); // management internal parameter
+    $context = stream_context_create(array('http' => array(
+        'method' => 'POST',
+        'header' =>
+            'Content-type: application/x-www-form-urlencoded' . "\r\n" .
+            'Content-Length: ' . strlen($data) . "\r\n",
+        'content' => $data)));
 
     $fd = fopen($api, 'r', false, $context);
     $response = stream_get_contents($fd);
@@ -143,12 +72,170 @@ function sendPost($api, $key, $model, $txt) {
     return $response;
 } // sendPost
 
-*/
+
+//</editor-fold>
+
+$post = [];
+$sentiment = '';
+$showSentiment = true;
+//$topics= $_POST["topic"];
+$topics[0] = "TecdeMonterrey";
+
+/************INSTAGRAM API**///////////////////////
+
+
+for ($b = 0; $b < count($topics); $b++) {
+    //$json1 = file_get_contents("https://api.instagram.com/v1/media/popular?client_id=".$client_id);// Most popular posts
+    $json1 = file_get_contents("https://api.instagram.com/v1/tags/" . $topics[$b] . "/media/recent?client_id=" . $client_id);
+    $posts = json_decode($json1, true);
+    $children = $posts['data'];
+    //var_dump($posts);
+    //echo json_encode($children);
+
+    foreach ($children as $child) {
+
+        if ($showSentiment) {
+
+            $txt =  $child['caption']['text'];
+            //echo $children['caption']['text'];
+
+            $sentiment = '';
+            // We make the request and parse the response to an array
+            $response = sendPost($api, $key[$keyIndex], $model, $txt);
+
+            $json = json_decode($response, true);
+            if (isset($json['status']) && isset($json['status']['code'])) {
+                if ($json['status']['code'] == '0') {
+
+                    $sentiment = $json['score_tag'];
+                    switch ($json['score_tag']) {
+                        case "P+":
+                            $sentiment = 'P+';
+                            break;
+                        case "P":
+                            $sentiment = 'P';
+                            break;
+                        case "NEU":
+                            $sentiment = 'NEU';
+                            break;
+                        case "N":
+                            $sentiment = 'N';
+                            break;
+                        case "N+":
+                            $sentiment = 'N+';
+                            break;
+                        case "NONE":
+                            $sentiment = 'NONE';
+                            break;
+                    }
+                }
+                // 102: You have exceeded the maximum number of credits per month
+                elseif ($json['status']['code'] == '102' || $json['status']['code'] == '101') {
+                    $var = true;
+                    while ($var) {
+                        $keyIndex++;
+                        // We make the request AGAIN WITH NEW KEY and parse the response to an array
+                        $response = sendPost($api, $key[$keyIndex], $model, $txt);
+                        $json = json_decode($response, true);
+                        if (isset($json['status']) && isset($json['status']['code'])) {
+
+                            if (isset($json['score']) && $json['status']['code'] == '0') {
+                                $sentiment = $json['score_tag'];
+                                $var = false;
+                            } else if ($json['status']['code'] == '102') {
+                                // nothing to do...while continue
+                            } elseif ($json['status']['code'] == '100') { // Servicio denegado
+                                $var = false;
+                            } else {
+                            }
+                        }
+                    }//endwhile;
+                }
+                elseif ($json['status']['code'] == '100' || $json['status']['code'] == '202' || $json['status']['code'] == '203') {
+                    $sentiment = 'No disponible';
+                }
+                elseif ($json['status']['code'] == '103') {
+                    $sentiment = 'Request too large.';
+                }
+                elseif ($json['status']['code'] == '104') {
+                    $sentiment=' Request rate limit exceeded.';
+                }
+                elseif ($json['status']['code'] == '200') {
+                    $sentiment='Parametro faltante.';
+                }
+                elseif ($json['status']['code'] == '201' || $json['status']['code'] == '204') {
+                    $sentiment= 'Lenguaje no soportado.';
+                }
+                else {
+                    $sentiment= 'NEU'; // No determino sentimiento positivo/negativo
+                    //echo 'Sentimiento: <span class="label label-default">Neutral</span>';
+                }
+                //Ver la manera de mandar un email a los admin, avisando de la expiraci�n de la licencia.
+                // 101: The license has expire
+                /*
+                    0: OK -- Listo
+                    100: Operation denied -- Listo
+                    101: License expired -- Listo
+                    102: Credits per suscription exceeded -- Listo
+                    103: Request too large -- Listo
+                    104: Request rate limit exceeded
+                    200: Missing required parameter(s) - [name of the parameter]
+                    201: Model not supported
+                    202: Engine internal error
+                    203: Cannot connect to service
+                    204: Model not suitable for the identified text language
+                */
+            }
+        }
 
 
 
+        $id = $child['id'];
+        $type = $child['type'];
+        $desc = $child['caption']['text'];
+        $location = $child['location'];//latitude, name,longitude,id
+        $comments=$child['comments'];//,$children["comments"]["data"]"text":"@jerry_vzz @rogeliodlgg @emmanuelsm95 muy buena \ud83d\udc4c\ud83c\udffc",  "from":{  "username":"gmunozdiego","profile_picture":"https:\/\/scontent.cdninstagram.com\/hphotos-xaf1\/t51.2885-19\/s150x150\/12357627_555854394569519_142841922_a.jpg","id":"218239359","full_name":"Guillermo Mu\u00f1oz-Diego" },
+        $created_time = $child['created_time'];
+        $likes = $child['likes']['count'];
+        $thumbnail = $child['images']['thumbnail'];
+        $link = $child['link'];
+        $user_id = $child['user']['id'];
+        $user_name = $child['user']['username'];
+        $full_name = $child['user']['full_name'];
+        $location = $child["location"];
+        //$website = $child['user']['website'];
+        $profile_pic = $child['user']['profile_picture'];
 
 
+        //<editor-fold desc="Limpiar texto">
+        $instaClean = '';
+        if ($child['caption']['text'] != null && $child['caption']['text'] != '') {
+            $instaClean = removeAccents($child['caption']['text']);
+        }
+        //</editor-fold>
 
+        $arraySearch = [
+            "id_post" => $id,
+            "likes" => $likes,
+            "text_clean" => utf8_encode($instaClean),
+            "created_time" => $created_time,
+            "id_usuario" => $user_id,
+            "nombre_usuario" => utf8_encode($user_name),
+            "screen_name" => utf8_encode($full_name),
+            "foto_perfil" => $profile_pic,
+            //"description" => utf8_encode($desc),
+            "comments" => $comments,
+            "url" => $link,
+            "type" => $type,
+            "location" => $location,
+            "sentiment" => $sentiment,
+            "api" => 'instagram'
+        ];
 
+        array_push($post, $arraySearch);
+
+        //$coll->insert($arraySearch);
+
+    }
+}
 echo json_encode($post);
