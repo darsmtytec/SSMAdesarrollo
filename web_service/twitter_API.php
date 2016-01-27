@@ -27,6 +27,7 @@ function removeAccents($str)
 
 //</editor-fold>
 
+//<editor-fold desc="Variables">
 $b = 0;
 $word[] = '';
 $topico[] = '';
@@ -38,6 +39,7 @@ $post[] = '';
 $bol = true;
 $showSentiment = 'true';
 $notweets = 1; //cantidad de tweets a mostrar
+//</editor-fold>
 
 if (isset($_POST["user"][0]) && $_POST["user"][0] != '') {
     $user = $_POST["user"];
@@ -170,8 +172,8 @@ if ($topics[0] != '') {
                 }
 
                 if ($count <= 30) {
-                    $json = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArraySearch['statuses'][$a]['user']['id'] . "?key=" . $kloutKey);
-                    $kloutID = json_decode($json, true);
+                    $jsonK = file_get_contents("http://api.klout.com/v2/identity.json/tw/". $phpArraySearch['statuses'][$a]['user']['id']."?key=".$kloutKey);
+                    $kloutID = json_decode($jsonK, true);
 
                     $json1 = file_get_contents("http://api.klout.com/v2/user.json/" . $kloutID['id'] . "?key=" . $kloutKey);
                     $kloutScore = json_decode($json1, true);
@@ -181,8 +183,8 @@ if ($topics[0] != '') {
                 else {
                     sleep(15);
                     $count = 0;
-                    $json = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArraySearch['statuses'][$a]['user']['id'] . "?key=" . $kloutKey);
-                    $kloutID = json_decode($json, true);
+                    $jsonK = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArraySearch['statuses'][$a]['user']['id'] . "?key=" . $kloutKey);
+                    $kloutID = json_decode($jsonK, true);
 
                     $json1 = file_get_contents("http://api.klout.com/v2/user.json/" . $kloutID['id'] . "?key=" . $kloutKey);
                     $kloutScore = json_decode($json1, true);
@@ -292,8 +294,9 @@ if ($topics[0] != '') {
 
             if ($rtImg) {
                 // Necesitamos calcular el klout de la persona RT
-                $json = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArraySearch['statuses'][$a]['retweeted_status']['user']['id_str'] . "?key=" . $kloutKey);
-                $kloutID = json_decode($json, true);
+                $jsonK = file_get_contents("http://api.klout.com/v2/identity.json/tw/". $phpArraySearch['statuses'][$a]['user']['id']."?key=".$kloutKey);
+                $kloutID = json_decode($jsonK, true);
+
                 $json1 = file_get_contents("http://api.klout.com/v2/user.json/" . $kloutID['id'] . "?key=" . $kloutKey);
                 $kloutScore = json_decode($json1, true);
                 $kloutRT = $kloutScore['score']['score'];
@@ -322,14 +325,16 @@ if ($topics[0] != '') {
             $arraySearch[$b]["location"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['location']);
             if ($phpArraySearch['statuses'][$a]['user']['protected']) {
                 $arraySearch[$b]["protected"] = "true";
-            } else {
+            }
+            else {
                 $arraySearch[$b]["protected"] = "false";
 
             }
             $arraySearch[$b]["friends_count"] = utf8_encode($phpArraySearch['statuses'][$a]['user']['friends_count']);
             if ($phpArraySearch['statuses'][$a]['user']['verified']) {
                 $arraySearch[$b]["verified"] = "true";
-            } else {
+            }
+            else {
                 $arraySearch[$b]["verified"] = "false";
 
             }
@@ -348,8 +353,7 @@ if ($topics[0] != '') {
 
 echo json_encode($arraySearch);
 }
-else
-if ($accounts[0] != '') {
+else if ($accounts[0] != '') {
 
     for ($c = 0; $c < count($accounts); $c++) {
         $tweetsAccount = $connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" . $accounts[$c] . "&count=" . $notweets);
@@ -368,8 +372,8 @@ if ($accounts[0] != '') {
                 }
 
                 if ($a == 0) {
-                    $json = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArrayAccount[$a]['user']['id_str'] . "?key=" . $kloutKey);
-                    $kloutID = json_decode($json, true);
+                    $jsonK = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArrayAccount[$a]['user']['id_str'] . "?key=" . $kloutKey);
+                    $kloutID = json_decode($jsonK, true);
                     $json1 = file_get_contents("http://api.klout.com/v2/user.json/" . $kloutID['id'] . "?key=" . $kloutKey);
                     $kloutScore = json_decode($json1, true);
                     $kloutUser = $kloutScore['score']['score'];
@@ -467,8 +471,8 @@ if ($accounts[0] != '') {
 
                 if ($rtImg) {
                     // Necesitamos calcular el klout de la persona RT
-                    $json = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArrayAccount[$a]['retweeted_status']['user']['id_str'] . "?key=" . $kloutKey);
-                    $kloutID = json_decode($json, true);
+                    $jsonK = file_get_contents("http://api.klout.com/v2/identity.json/tw/" . $phpArrayAccount[$a]['retweeted_status']['user']['id_str'] . "?key=" . $kloutKey);
+                    $kloutID = json_decode($jsonK, true);
                     $json1 = file_get_contents("http://api.klout.com/v2/user.json/" . $kloutID['id'] . "?key=" . $kloutKey);
                     $kloutScore = json_decode($json1, true);
                     $kloutRT = $kloutScore['score']['score'];

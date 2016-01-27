@@ -7,11 +7,15 @@
 //$boolean = false;
 $cont = 0;
 $post = [];
+$showSentiment = false;
+$sentiment = '';
 //while ($boolean != true) {
-$query = 'Tec%20de%20Monterrey';
-$url = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=" . $query . "&userip=USERS-IP-ADDRESS&rsz=large";//&start=".$cont;
-//echo $url;
-//echo '</br>';
+$query = 'ITESM';
+$url = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=" . $query . "&key=AIzaSyBH7CCYp-F3REO_nVKPHeLHzW1sSnp6nGY&userip=USERS-IP-ADDRESS&rsz=large";//&start=".$cont;
+
+
+
+
 
 
 //<editor-fold desc="Remove accents">
@@ -32,12 +36,61 @@ function removeAccents($str)
 //</editor-fold>
 $body = file_get_contents($url);
 $json = json_decode($body);
-//$responseData =array();
-//$results = array();
+
+
+//<editor-fold desc="Sentiment API">
+//https://www.meaningcloud.com/developer/apis
+
+$api = 'http://api.meaningcloud.com/sentiment-2.0';
+$key[0] = 'e9ce37fc21e2fbfba29bde1d2fbd3b61'; //socialmediadaac@gmail.com
+$key[1] = '21089e2646a625584cee07cc52421d24'; //socialmediadaac0@gmail.com
+$key[2] = '2662039e381619d652afa4bd08b11cf0'; //socialmediadaac1@gmail.com
+$key[3] = '247d733eb8fc2c8e8fe8e2f5492f1598'; //socialmediadaac2@gmail.com
+$key[4] = '6e09fa82b045b09fee2e0410baeee945'; //socialmediadaac3@gmail.com
+$key[5] = '91aa5264fa77df2e3c928cce324d6658'; //socialmediadaac4@gmail.com
+$key[6] = 'cf803ded8f0c20d1d3247694afb1a3b2'; //socialmediadaac5@gmail.com
+$key[8] = 'd5af72bc04ee7c663840212cd71edd1a'; //e.acosta@itesm.mx
+$key[9] = ''; // Sacar del while
+$txt = '';
+$model = 'auto'; //general_es general_en general_fr auto  // es-general/en-general/fr-general/en-reputation/es-reputation DEPRECATED
+$keyIndex = 0;
+if (isset($_POST["sentiment"]) && $_POST["sentiment"] != '') {
+    $showSentiment = $_POST["sentiment"];
+
+    if($showSentiment == 'true'){
+        $showSentiment = true;
+    }
+}
+
+// Auxiliary function to make a post request
+function sendPost($api, $key, $model, $txt)
+{
+    $data = http_build_query(array('key' => $key,
+        'model' => $model,
+        'txt' => $txt,
+        'src' => 'sdk-php-2.0')); // management internal parameter
+    $context = stream_context_create(array('http' => array(
+        'method' => 'POST',
+        'header' =>
+            'Content-type: application/x-www-form-urlencoded' . "\r\n" .
+            'Content-Length: ' . strlen($data) . "\r\n",
+        'content' => $data)));
+
+    $fd = fopen($api, 'r', false, $context);
+    $response = stream_get_contents($fd);
+    fclose($fd);
+    return $response;
+} // sendPost
+
+
+//</editor-fold>
 
 
 //var_dump($json->responseData);
 //http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=$query&start=4
+
+
+$showSentiment = true;
 
 for ($x = 0; $x < count($json->responseData->results); $x++) {
 
@@ -54,6 +107,102 @@ for ($x = 0; $x < count($json->responseData->results); $x++) {
     $titleNoFormatting = removeAccents($titleNoFormatting);
     $coment = $json->responseData->results[$x]->content;
     $coment = removeAccents($coment);
+    $coment=strip_tags($coment);
+
+
+    if ($showSentiment) {
+
+        $txt =  $coment;
+        //echo $children['caption']['text'];
+
+        $sentiment = '';
+        // We make the request and parse the response to an array
+        $response = sendPost($api, $key[$keyIndex], $model, $txt);
+
+        $jsonS = json_decode($response, true);
+        if (isset($jsonS['status']) && isset($jsonS['status']['code'])) {
+            if ($jsonS['status']['code'] == '0') {
+
+                $sentiment = $jsonS['score_tag'];
+                switch ($jsonS['score_tag']) {
+                    case "P+":
+                        $sentiment = 'P+';
+                        break;
+                    case "P":
+                        $sentiment = 'P';
+                        break;
+                    case "NEU":
+                        $sentiment = 'NEU';
+                        break;
+                    case "N":
+                        $sentiment = 'N';
+                        break;
+                    case "N+":
+                        $sentiment = 'N+';
+                        break;
+                    case "NONE":
+                        $sentiment = 'NONE';
+                        break;
+                }
+            }
+            // 102: You have exceeded the maximum number of credits per month
+            elseif ($jsonS['status']['code'] == '102' || $jsonS['status']['code'] == '101') {
+                $var = true;
+                while ($var) {
+                    $keyIndex++;
+                    // We make the request AGAIN WITH NEW KEY and parse the response to an array
+                    $response = sendPost($api, $key[$keyIndex], $model, $txt);
+                    $jsonS = json_decode($response, true);
+                    if (isset($jsonS['status']) && isset($jsonS['status']['code'])) {
+
+                        if (isset($jsonS['score']) && $json['status']['code'] == '0') {
+                            $sentiment = $jsonS['score_tag'];
+                            $var = false;
+                        } else if ($jsonS['status']['code'] == '102') {
+                            // nothing to do...while continue
+                        } elseif ($jsonS['status']['code'] == '100') { // Servicio denegado
+                            $var = false;
+                        } else {
+                        }
+                    }
+                }//endwhile;
+            }
+            elseif ($jsonS['status']['code'] == '100' || $jsonS['status']['code'] == '202' || $jsonS['status']['code'] == '203') {
+                $sentiment = 'No disponible';
+            }
+            elseif ($jsonS['status']['code'] == '103') {
+                $sentiment = 'Request too large.';
+            }
+            elseif ($jsonS['status']['code'] == '104') {
+                $sentiment=' Request rate limit exceeded.';
+            }
+            elseif ($jsonS['status']['code'] == '200') {
+                $sentiment='Parametro faltante.';
+            }
+            elseif ($jsonS['status']['code'] == '201' || $jsonS['status']['code'] == '204') {
+                $sentiment= 'Lenguaje no soportado.';
+            }
+            else {
+                $sentiment= 'NEU'; // No determino sentimiento positivo/negativo
+                //echo 'Sentimiento: <span class="label label-default">Neutral</span>';
+            }
+            //Ver la manera de mandar un email a los admin, avisando de la expiraci�n de la licencia.
+            // 101: The license has expire
+            /*
+                0: OK -- Listo
+                100: Operation denied -- Listo
+                101: License expired -- Listo
+                102: Credits per suscription exceeded -- Listo
+                103: Request too large -- Listo
+                104: Request rate limit exceeded
+                200: Missing required parameter(s) - [name of the parameter]
+                201: Model not supported
+                202: Engine internal error
+                203: Cannot connect to service
+                204: Model not suitable for the identified text language
+            */
+        }
+    }
 
 
     $responseData["responseData"]["results"][$x]["GsearchResultClass"] = $GsearchResultClass;
@@ -63,19 +212,13 @@ for ($x = 0; $x < count($json->responseData->results); $x++) {
     $responseData["responseData"]["results"][$x]["titlulo"] = $titlulo;
     $responseData["responseData"]["results"][$x]["titleNoFormatting"] = $titleNoFormatting;
     $responseData["responseData"]["results"][$x]["coment"] = $coment;
+    $responseData["responseData"]["results"][$x]["sentiment"] = $sentiment;
+
 
 
     array_push($post, $responseData);
 }
-/*
-for ($a = 0; $a < count($json->responseData->cursor->pages); $a++) {
 
-    $start = $json->responseData->cursor->pages[$a]->start;
-    $label = $json->responseData->cursor->pages[$a]->label;
-    $responseData["responseData"]["cursor"]["pages"][$a]["start"] = $start;
-    $responseData["responseData"]["cursor"]["pages"][$a]["label"] = $label;
-
-}
 $resultCount = $json->responseData->cursor->resultCount;
 $estimatedResultCount = $json->responseData->cursor->estimatedResultCount;
 $currentPageIndex = $json->responseData->cursor->currentPageIndex;
@@ -87,6 +230,18 @@ $responseData["responseData"]["cursor"]["estimatedResultCount"] = $estimatedResu
 $responseData["responseData"]["cursor"]["currentPageIndex"] = $currentPageIndex;
 $responseData["responseData"]["cursor"]["moreResultsUrl"] = $moreResultsUrl;
 $responseData["responseData"]["cursor"]["searchResultTime"] = $searchResultTime;
+array_push($post, $responseData);
 
+/*
+for ($a = 0; $a < count($json->responseData->cursor->pages); $a++) {
+
+    $start = $json->responseData->cursor->pages[$a]->start;
+    $label = $json->responseData->cursor->pages[$a]->label;
+    $responseData["responseData"]["cursor"]["pages"][$a]["start"] = $start;
+    $responseData["responseData"]["cursor"]["pages"][$a]["label"] = $label;
+
+}
 */
+
+
 echo json_encode($post);

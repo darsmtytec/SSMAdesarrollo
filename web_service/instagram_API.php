@@ -75,7 +75,7 @@ function sendPost($api, $key, $model, $txt)
 
 //</editor-fold>
 
-$post[] = '';
+$post = [];
 $sentiment = '';
 $showSentiment = true;
 //$topics= $_POST["topic"];
@@ -89,7 +89,7 @@ for ($b = 0; $b < count($topics); $b++) {
     $json1 = file_get_contents("https://api.instagram.com/v1/tags/" . $topics[$b] . "/media/recent?client_id=" . $client_id);
     $posts = json_decode($json1, true);
     $children = $posts['data'];
-    //var_dump($children);
+    //var_dump($posts);
     //echo json_encode($children);
 
     foreach ($children as $child) {
@@ -195,7 +195,7 @@ for ($b = 0; $b < count($topics); $b++) {
         $desc = $child['caption']['text'];
         $location = $child['location'];//latitude, name,longitude,id
         $comments=$child['comments'];//,$children["comments"]["data"]"text":"@jerry_vzz @rogeliodlgg @emmanuelsm95 muy buena \ud83d\udc4c\ud83c\udffc",  "from":{  "username":"gmunozdiego","profile_picture":"https:\/\/scontent.cdninstagram.com\/hphotos-xaf1\/t51.2885-19\/s150x150\/12357627_555854394569519_142841922_a.jpg","id":"218239359","full_name":"Guillermo Mu\u00f1oz-Diego" },
-        $created = $child['created_time'];
+        $created_time = $child['created_time'];
         $likes = $child['likes']['count'];
         $thumbnail = $child['images']['thumbnail'];
         $link = $child['link'];
@@ -218,13 +218,15 @@ for ($b = 0; $b < count($topics); $b++) {
             "id_post" => $id,
             "likes" => $likes,
             "text_clean" => utf8_encode($instaClean),
+            "created_time" => $created_time,
             "id_usuario" => $user_id,
             "nombre_usuario" => utf8_encode($user_name),
             "screen_name" => utf8_encode($full_name),
             "foto_perfil" => $profile_pic,
-            "description" => utf8_encode($desc),
+            //"description" => utf8_encode($desc),
             "comments" => $comments,
             "url" => $link,
+            "type" => $type,
             "location" => $location,
             "sentiment" => $sentiment,
             "api" => 'instagram'
@@ -232,7 +234,7 @@ for ($b = 0; $b < count($topics); $b++) {
 
         array_push($post, $arraySearch);
 
-        $coll->insert($arraySearch);
+        //$coll->insert($arraySearch);
 
     }
 }

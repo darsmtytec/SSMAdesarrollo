@@ -50,7 +50,7 @@ $keyIndex = 0;
 if (isset($_POST["sentiment"]) && $_POST["sentiment"] != '') {
     $showSentiment = $_POST["sentiment"];
 
-    if ($showSentiment == 'true') {
+    if($showSentiment == 'true'){
         $showSentiment = true;
     }
 }
@@ -77,7 +77,6 @@ function sendPost($api, $key, $model, $txt)
 
 
 //</editor-fold>
-
 
 //<editor-fold desc="Usuario y Topicos">
 if (isset($_POST["accounts"][0]) && $_POST["accounts"][0] != '') {
