@@ -5,14 +5,34 @@
  * Date: 1/15/2016
  * Time: 3:42 PM
  */
-echo '
+// Comparar las versiones para iniciar la sesion
+if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+    if(session_id() == '') {session_start();}
+} else  {
+    if (session_status() == PHP_SESSION_NONE) {session_start();}
+}
+
+
+// Revisar que exista una sesion activa
+if( isset($_SESSION['user'])) {
+    // Timestamp para timeout, 15 minutos de inactividad (1800)
+    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+        // Redireccionar a la pagina principal
+        $home_url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/session.php';
+        header('Location: ' . $home_url);
+        exit();
+    }
+    $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+    echo '
 <!-- BEGIN HEAD -->
 <head>
 	<title>Lab 2 | SMA</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
-	<meta content="" name="description" />
-	<meta content="" name="author" />
+	<meta content="SSMA" name="description" />
+	<meta content="DARS" name="author" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" href="assets/layouts/layout3/img/SMA_logo.png">
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
 	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
 	<link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -52,7 +72,7 @@ echo '
 				<!-- BEGIN TOP NAVIGATION MENU -->
 				<div class="top-menu">
 					<ul class="nav navbar-nav pull-right">
-						<!-- BEGIN NOTIFICATION DROPDOWN -->
+						<!-- BEGIN NOTIFICATION DROPDOWN
 						<li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
 							<a  class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 							<i class="icon-bell"></i>
@@ -152,8 +172,8 @@ echo '
 								</li>
 							</ul>
 						</li>
-						<!-- END NOTIFICATION DROPDOWN -->
-						<!-- BEGIN TODO DROPDOWN -->
+						END NOTIFICATION DROPDOWN -->
+						<!-- BEGIN TODO DROPDOWN
 						<li class="dropdown dropdown-extended dropdown-tasks dropdown-dark" id="header_task_bar">
 							<a  class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 							<i class="icon-calendar"></i>
@@ -263,11 +283,11 @@ echo '
 								</li>
 							</ul>
 						</li>
-						<!-- END TODO DROPDOWN -->
+						END TODO DROPDOWN
 						<li class="droddown dropdown-separator">
 							<span class="separator"></span>
-						</li>
-						<!-- BEGIN INBOX DROPDOWN -->
+						</li> -->
+						<!-- BEGIN INBOX DROPDOWN
 						<li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
 							<a  class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 							<span class="circle">3</span>
@@ -285,7 +305,7 @@ echo '
 										<li>
 											<a href="#">
 											<span class="photo">
-											<img src="assets/layouts/layout3/img/avatar2.jpg" class="img-circle" alt=""> </span>
+											<img src="dashboard/img/user-icon.png" class="img-circle" alt=""> </span>
 											<span class="subject">
 											<span class="from"> Lisa Wong </span>
 											<span class="time">Just Now </span>
@@ -296,7 +316,7 @@ echo '
 										<li>
 											<a href="#">
 											<span class="photo">
-											<img src="assets/layouts/layout3/img/avatar3.jpg" class="img-circle" alt=""> </span>
+											<img src="dashboard/img/user-icon.png" class="img-circle" alt=""> </span>
 											<span class="subject">
 											<span class="from"> Richard Doe </span>
 											<span class="time">16 mins </span>
@@ -307,7 +327,7 @@ echo '
 										<li>
 											<a href="#">
 											<span class="photo">
-											<img src="assets/layouts/layout3/img/avatar1.jpg" class="img-circle" alt=""> </span>
+											<img src="dashboard/img/user-icon.png" class="img-circle" alt=""> </span>
 											<span class="subject">
 											<span class="from"> Bob Nilson </span>
 											<span class="time">2 hrs </span>
@@ -318,7 +338,7 @@ echo '
 										<li>
 											<a href="#">
 											<span class="photo">
-											<img src="assets/layouts/layout3/img/avatar2.jpg" class="img-circle" alt=""> </span>
+											<img src="dashboard/img/user-icon.png" class="img-circle" alt=""> </span>
 											<span class="subject">
 											<span class="from"> Lisa Wong </span>
 											<span class="time">40 mins </span>
@@ -329,7 +349,7 @@ echo '
 										<li>
 											<a href="#">
 											<span class="photo">
-											<img src="assets/layouts/layout3/img/avatar3.jpg" class="img-circle" alt=""> </span>
+											<img src="dashboard/img/user-icon.png" class="img-circle" alt=""> </span>
 											<span class="subject">
 											<span class="from"> Richard Doe </span>
 											<span class="time">46 mins </span>
@@ -341,19 +361,30 @@ echo '
 								</li>
 							</ul>
 						</li>
-						<!-- END INBOX DROPDOWN -->
+						END INBOX DROPDOWN -->
 						<!-- BEGIN USER LOGIN DROPDOWN -->
 						<li class="dropdown dropdown-user dropdown-dark">
 							<a  class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-							<img alt="" class="img-circle" src="assets/layouts/layout3/img/avatar9.jpg">
-							<span class="username username-hide-mobile">Nick</span>
+							<img alt="" class="img-circle" src="dashboard/img/user-icon.png">
+							<!-- <span class="username username-hide-mobile">Nick</span> -->
+							<span class="username username-hide-mobile">' . $_SESSION["nombre"] . '</span>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-default">
 								<li>
 									<a href="page_user_profile_1.html">
 									<i class="icon-user"></i> My Profile </a>
-								</li>
-								<li>
+								</li> ';
+    // Revisar el rol
+if ($_SESSION["perfil"] == "admin"){
+    echo '
+        <li>
+            <a href="settings.php">
+            <i class="icon-user"></i> Settings </a>
+        </li>
+    ';
+}
+    echo '
+								<!-- <li>
 									<a href="app_calendar.html">
 									<i class="icon-calendar"></i> My Calendar </a>
 								</li>
@@ -373,20 +404,20 @@ echo '
 								<li>
 									<a href="page_user_lock_1.html">
 									<i class="icon-lock"></i> Lock Screen </a>
-								</li>
+								</li> -->
 								<li>
-									<a href="page_user_login_1.html">
+									<a href="session.php">
 									<i class="icon-key"></i> Log Out </a>
 								</li>
 							</ul>
 						</li>
 						<!-- END USER LOGIN DROPDOWN -->
-						<!-- BEGIN QUICK SIDEBAR TOGGLER -->
+						<!-- BEGIN QUICK SIDEBAR TOGGLER
 						<li class="dropdown dropdown-extended quick-sidebar-toggler">
 							<span class="sr-only">Toggle Quick Sidebar</span>
 							<i class="icon-logout"></i>
 						</li>
-						<!-- END QUICK SIDEBAR TOGGLER -->
+						 END QUICK SIDEBAR TOGGLER -->
 					</ul>
 				</div>
 				<!-- END TOP NAVIGATION MENU -->
@@ -417,11 +448,22 @@ echo '
 							<a href="dashboard.php" id="menu-dashboard">Dashboard</a>
 						</li>
 						<li id="menu-busqueda" class="menu-dropdown">
-							<a href="busqueda.php" id="menu-busqueda">Búsqueda</a>
+							<a href="busqueda.php" id="menu-busqueda">BÃºsqueda</a>
 						</li>
-						<li id="menu-busqueda" class="menu-dropdown">
-							<a href="historico.php" id="menu-historico">Histórico</a>
+						<li id="menu-historico" class="menu-dropdown">
+							<a href="historico.php" id="menu-historico">HistÃ³rico</a>
+						</li>';
+
+    // Revisar el rol
+    if ($_SESSION["perfil"] == "admin"){
+        echo '
+        <li id="menu-consola" class="menu-dropdown">
+							<a href="consola.php" id="menu-consola">Consola</a>
 						</li>
+    ';
+    }
+
+    echo '
 					</ul>
 				</div>
 				<!-- END MEGA MENU -->
@@ -435,21 +477,6 @@ echo '
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
 	<!-- BEGIN CONTENT BODY -->
-	<!-- BEGIN PAGE HEAD-->
-	<div class="page-head">
-		<div class="container-fluid">
-			<!-- BEGIN PAGE TITLE -->
-			<div class="page-title">
-				<!--Titulo de la página-->
-			</div>
-			<!-- END PAGE TITLE -->
-			<!-- BEGIN PAGE TOOLBAR -->
-			<div class="page-toolbar">
-			</div>
-			<!-- END PAGE TOOLBAR -->
-		</div>
-	</div>
-	<!-- END PAGE HEAD-->
 	<!-- BEGIN PAGE CONTENT BODY -->
 	<div class="page-content">
 	<div class="container-fluid">
@@ -466,4 +493,9 @@ echo '
 	<!-- END PAGE BREADCRUMBS -->
 	<!-- BEGIN PAGE CONTENT INNER -->
 	<div class="page-content-inner">
-	';
+	';}
+else {
+    $home_url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/';
+    header('Location: ' . $home_url);
+    exit();
+}

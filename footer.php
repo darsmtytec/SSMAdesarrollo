@@ -580,7 +580,7 @@ echo '</div>
 <!-- BEGIN INNER FOOTER -->
 <div class="page-footer">
     <div class="container-fluid"> 2016 &copy; Lab 2 - SMA.
-        <a>¿Quieres ir al SSPA?</a>
+        <a>Â¿Quieres ir al SSPA?</a>
     </div>
 </div>
 <div class="scroll-to-top">
@@ -606,7 +606,6 @@ echo '</div>
 <!-- END THEME GLOBAL SCRIPTS -->
 <!-- BEGIN THEME LAYOUT SCRIPTS -->
 <script src="assets/layouts/layout3/scripts/layout.min.js" type="text/javascript"></script>
-<script src="assets/layouts/layout3/scripts/demo.min.js" type="text/javascript"></script>
 <script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 <!-- END THEME LAYOUT SCRIPTS -->
 <!-- BEGIN CUSTOM SCRIPTS -->

@@ -4,14 +4,22 @@
 include 'header.php';
 ?>
 <!-- BEGIN PAGE LEVEL PLUGINS -->
-<link href="busqueda/busqueda.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/socicon/socicon.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="busqueda/busqueda.css" rel="stylesheet" type="text/css"/>
+<link href="assets/global/plugins/socicon/socicon.css" rel="stylesheet" type="text/css"/>
+<link href="assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet"
+      type="text/css"/>
+<link href="assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
+<link href="assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js"
+        async defer></script>
+<script async src='//cdn.embedly.com/widgets/platform.js' charset='UTF-8'></script>
+<script src="//platform.instagram.com/en_US/embeds.js"></script>
+
+
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL STYLES -->
-<link href="assets/apps/css/todo-2.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/apps/css/todo-2.min.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL STYLES -->
 <!--==============================
     Search Section
@@ -26,7 +34,7 @@ include 'header.php';
                 <div class="portlet-title">
                     <div class="caption font-red-sunglo">
                         <i class="icon-settings font-red-sunglo"></i>
-                        <span class="caption-subject bold uppercase"> Configuración de Búsqueda</span>
+                        <span class="caption-subject bold uppercase"> ConfiguraciÃ³n de BÃºsqueda</span>
                     </div>
                 </div>
                 <div class="portlet-body form">
@@ -36,7 +44,7 @@ include 'header.php';
                                 <div class="input-group input-group-lg">
                                     <div class="input-group-control">
                                         <input id="terms-main-input" type="text" class="form-control">
-                                        <label for="form_control">Agrega los términos de búsqueda</label>
+                                        <label for="form_control">Agrega los tÃ©rminos de bÃºsqueda</label>
                                     </div>
                                     <span id="terms-main-btn" class="input-group-btn btn-right">
                                         <button class="btn green-meadow" type="button">
@@ -45,30 +53,42 @@ include 'header.php';
                                     </span>
                                 </div>
                             </div>
-                            <a id="advanced" class="tooltips" data-original-title="Configuraciones de búsqueda extras">Opciones Avanzadas...</a>
+                            <a id="advanced" class="tooltips" data-original-title="Configuraciones de bÃºsqueda extras">Opciones
+                                Avanzadas...</a>
                             <!--ADVANCED------------------------------------------------------->
                             <p>
                             </p>
                             <!--SocialIcons--------------------------------------------------->
                             <div id="section-advanced" class="section" style="display: none">
-                                    <h4>Redes Sociales</h4>
-                                    <div class="socicons">
-                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-green font-white bg-hover-grey-salsa socicon-twitter tooltips" data-original-title="Twitter"></a>
-                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-blue-steel font-white bg-hover-grey-salsa socicon-facebook tooltips" data-original-title="Facebook"></a>
-                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-grey-gallery font-white bg-hover-grey-salsa socicon-instagram tooltips" data-original-title="Instagram"></a>
-                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-blue-chambray font-white bg-hover-grey-salsa socicon-tumblr tooltips" data-original-title="Tumblr"></a>
-                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-youtube tooltips" data-original-title="Youtube"></a>
-                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-blue-hoki font-white bg-hover-grey-salsa socicon-linkedin tooltips" data-original-title="Linkedin"></a>
-                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-pinterest tooltips" data-original-title="Pinterest"></a>
-                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-google tooltips" data-original-title="Google"></a>
-                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-yellow-gold font-white bg-hover-grey-salsa socicon-blogger tooltips" data-original-title="Blogger"></a>
-                                        <a class="socicon-btn socicon-btn-circle socicon-solid bg-red-flamingo font-white bg-hover-grey-salsa socicon-reddit tooltips" data-original-title="Reddit"></a>
-                                    </div>
+                                <h4>Redes Sociales</h4>
+                                <div class="socicons">
+                                    <a class="socicon-btn socicon-btn-circle socicon-solid bg-green font-white bg-hover-grey-salsa socicon-twitter tooltips"
+                                       data-original-title="Twitter"></a>
+                                    <a class="socicon-btn socicon-btn-circle socicon-solid bg-blue-steel font-white bg-hover-grey-salsa socicon-facebook tooltips"
+                                       data-original-title="Facebook"></a>
+                                    <a class="socicon-btn socicon-btn-circle socicon-solid bg-grey-gallery font-white bg-hover-grey-salsa socicon-instagram tooltips"
+                                       data-original-title="Instagram"></a>
+                                    <a class="socicon-btn socicon-btn-circle socicon-solid bg-blue-chambray font-white bg-hover-grey-salsa socicon-tumblr tooltips"
+                                       data-original-title="Tumblr"></a>
+                                    <a class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-youtube tooltips"
+                                       data-original-title="Youtube"></a>
+                                    <a class="socicon-btn socicon-btn-circle socicon-solid bg-blue-hoki font-white bg-hover-grey-salsa socicon-linkedin tooltips"
+                                       data-original-title="Linkedin"></a>
+                                    <a class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-pinterest tooltips"
+                                       data-original-title="Pinterest"></a>
+                                    <a class="socicon-btn socicon-btn-circle socicon-solid bg-red font-white bg-hover-grey-salsa socicon-google tooltips"
+                                       data-original-title="Google"></a>
+                                    <a class="socicon-btn socicon-btn-circle socicon-solid bg-yellow-gold font-white bg-hover-grey-salsa socicon-blogger tooltips"
+                                       data-original-title="Blogger"></a>
+                                    <a class="socicon-btn socicon-btn-circle socicon-solid bg-red-flamingo font-white bg-hover-grey-salsa socicon-reddit tooltips"
+                                       data-original-title="Reddit"></a>
+                                </div>
                                 <!--SocialIcons-->
                                 <div class="form-group form-md-checkboxes">
                                     <label>NSFW (Not Safe for Work)</label>
                                     <div class="md-checkbox-inline">
-                                        <div class="md-checkbox">
+                                        <div class="md-checkbox tooltips"
+                                             data-original-title="BÃºsquedas de contenido grÃ¡fico / ofensivo">
                                             <input type="checkbox" id="checkbox7" class="md-check" checked="">
                                             <label for="checkbox7">
                                                 <span class="inc"></span>
@@ -83,11 +103,15 @@ include 'header.php';
                                 </p>
                                 <div class="form-group form-md-line-input has-info">
                                     <select id="terms-select" class="form-control" id="form_control_1">
-                                        <option class="font-blue-sharp" value="1">Se incluyen todas las palabras...</option>
-                                        <option class="font-yellow-soft" value="2">Se incluyen algunas de las palabras...</option>
-                                        <option class="font-red-intense" value="0">No se incluyen las palabras...</option>
+                                        <option class="font-blue-sharp" value="1">Se incluyen todas las palabras...
+                                        </option>
+                                        <option class="font-yellow-soft" value="2">Se incluyen algunas de las
+                                            palabras...
+                                        </option>
+                                        <option class="font-red-intense" value="0">No se incluyen las palabras...
+                                        </option>
                                     </select>
-                                    <label for="form_control_1">Opciones de términos</label>
+                                    <label for="form_control_1">Opciones de tÃ©rminos</label>
                                 </div>
                                 <p></p>
                                 <p>
@@ -96,7 +120,7 @@ include 'header.php';
                                     <div class="input-group input-group-lg">
                                         <div class="input-group-control">
                                             <input id="terms-extra-input" type="text" class="form-control">
-                                            <label for="form_control">Agrega los términos de búsqueda</label>
+                                            <label for="form_control">Agrega los tÃ©rminos de bÃºsqueda</label>
                                         </div>
                                     <span id="terms-extra-btn" class="input-group-btn btn-right">
                                         <button class="btn blue-madison" type="button">
@@ -127,14 +151,14 @@ include 'header.php';
                 <div class="portlet-title">
                     <div class="caption font-red-sunglo">
                         <i class="icon-fire font-red-sunglo"></i>
-                        <span class="caption-subject bold uppercase"> Términos de Búsqueda</span>
+                        <span class="caption-subject bold uppercase"> TÃ©rminos de BÃºsqueda</span>
                     </div>
                 </div>
                 <div class="portlet-body form">
                     <form role="form">
                         <div id="terms-global-container" class="form-body">
                             <div id="terms-main-container">
-                                <h4>Términos de Búsqueda</h4>
+                                <h4>TÃ©rminos de BÃºsqueda</h4>
                                 <ul id="terms-main-search" class="list-inline">
                                     <!--li class="search-label bg-green-meadow font-white">Incluye&nbsp;<a class="fa fa-times"></a></li-->
                                 </ul>
@@ -184,22 +208,42 @@ include 'header.php';
                         </div>
                         <div class="portlet-body todo-project-list-content" style="height: auto;">
                             <div class="todo-project-list">
-                                <ul class="nav nav-stacked">
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge badge-info"> 6 </span> Twitter </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge badge-warning"> 2 </span> Instagram </a>
-                                    </li>
+                                <ul id="nav-red" class="nav nav-stacked">
                                     <li class="active">
-                                        <a href="javascript:;">
-                                            <span class="badge badge-danger"> 3 </span> Youtube </a>
+                                        <a href="#tab_twitter" data-toggle="tab">
+                                            <span id="tweet-count" class="badge bg-green"
+                                                  data-content="social-twitter-count">0</span>
+                                            Twitter
+                                        </a>
                                     </li>
                                     <li>
-                                        <a href="javascript:;">
-                                            <span class="badge badge-info"> 14 </span> Facebook </a>
+                                        <a href="#tab_instagram" data-toggle="tab">
+                                            <span id="instagram-count" class="badge bg-grey-gallery"
+                                                  data-content="social-instagram-count"> 0 </span> Instagram
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab_youtube" data-toggle="tab">
+                                            <span id="youtube-count" class="badge badge-danger"
+                                                  data-content="social-youtube-count"> 0 </span> Youtube
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab_facebook" data-toggle="tab">
+                                            <span class="badge badge-info"> 0 </span> Facebook
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab_tumblr" data-toggle="tab">
+                                            <span id="tumblr-count" class="badge badge-warning"
+                                                  data-content="social-tumblr-count"> 0 </span> Tumblr
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab_reddit" data-toggle="tab">
+                                            <span id="reddit-count" class="badge"
+                                                  data-content="social-reddit-count"> 0 </span> Reddit
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -212,7 +256,8 @@ include 'header.php';
                                 <span class="caption-helper visible-sm-inline-block visible-xs-inline-block">click to view</span>
                             </div>
                         </div>
-                        <div class="portlet-body todo-project-list-content todo-project-list-content-tags" style="height: auto;">
+                        <div class="portlet-body todo-project-list-content todo-project-list-content-tags"
+                             style="height: auto;">
                             <div class="todo-project-list">
                                 <ul class="nav nav-pills nav-stacked">
                                     <li>
@@ -244,22 +289,25 @@ include 'header.php';
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-bar-chart font-green-sharp hide"></i>
-                                <span class="caption-helper">Término Buscado:</span> &nbsp;
-                                <span class="caption-subject font-green-sharp bold uppercase">Tec de Monterrey</span>
+                                <span class="caption-helper">TÃ©rmino Buscado:</span> &nbsp;
+                                <span id='termBuscado' data-content=""
+                                      class="caption-subject font-green-sharp bold uppercase"></span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group">
-                                    <a class="btn green btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"> Opciones
+                                    <a class="btn green btn-circle btn-sm" href="javascript:;" data-toggle="dropdown"
+                                       data-hover="dropdown" data-close-others="true"> Opciones
                                         <i class="fa fa-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu pull-right">
                                         <li>
                                             <a href="javascript:;"> Lista </a>
                                         </li>
-                                        <li class="divider"> </li>
+                                        <li class="divider"></li>
                                         <li>
                                             <a href="javascript:;"> Exportar
-                                                <span class="label label-danger pull-right"><span class="fa fa-upload"></span></span>
+                                                <span class="label label-danger pull-right"><span
+                                                        class="fa fa-upload"></span></span>
                                             </a>
                                         </li>
                                     </ul>
@@ -267,204 +315,352 @@ include 'header.php';
                             </div>
                         </div>
                         <!-- end PROJECT HEAD -->
-                        <div class="portlet-body">
+                        <div id="portlet-body-content" class="portlet-body">
                             <div class="row">
-                                <div class="col-md-5 col-sm-4">
-                                    <div class="todo-tasklist">
-                                        <div class="todo-tasklist-item todo-tasklist-item-border-green">
-                                            <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar4.jpg" width="27px" height="27px">
-                                            <div class="todo-tasklist-item-title"> Slider Redesign </div>
-                                            <div class="todo-tasklist-item-text"> Lorem dolor sit amet ipsum dolor sit consectetuer dolore. </div>
-                                            <div class="todo-tasklist-controls pull-left">
-                                                                        <span class="todo-tasklist-date">
-                                                                            <i class="fa fa-calendar"></i> 21 Sep 2014 </span>
-                                                <span class="todo-tasklist-badge badge badge-roundless">Urgent</span>
+                                <div class="col-md-5 col-sm-4"><!---->
+                                    <div class="tab-content">
+
+                                        <div class="tab-pane active" id="tab_twitter">
+
+                                            <h3 class="font-blue sbold"><i class="fa fa-twitter">&nbsp;</i>Twitter</h3>
+                                            <div id="tweetLoad" class="todo-tasklist">
+                                                <div class='loading1 loading-tweet' style='display:none;'><img id=''
+                                                                                                               src='busqueda/img/loading.gif'
+                                                                                                               width='36'
+                                                                                                               height='36'
+                                                                                                               alt='loading gif'/>
+                                                </div>
+                                                <div id="todo-tasklist-twitter" class="todo-tasklist-item "
+                                                     style="display: none;">
+                                                    <img data-content="foto_perfil" class="todo-userpic pull-left"
+                                                         src="busqueda/img/twitter-egg.jpeg" width="27px" height="27px">
+                                                    <div class="todo-tasklist-item-title">
+                                                        <span data-content="nombre_usuario">Nombre</span>
+                                                        <a>
+                                                            <small class="font-grey-salsa" data-content="screen_name">
+                                                                @screenName
+                                                            </small>
+                                                        </a>
+                                                <span class="pull-right">
+                                                    <i class="fa fa-star font-grey-salsa""></i>
+                                                    <i class="fa fa-flag font-grey-salsa""></i>
+                                                </span>
+                                                    </div>
+                                                    <div class="todo-tasklist-item-text" data-content="text_tweet">
+                                                        Lorem dolor sit amet ipsum dolor sit consectetuer dolore.
+                                                    </div>
+                                                    <div class="todo-tasklist-controls pull-left">
+                                                        <span class="todo-tasklist-date" data-content="created_at">
+                                                            <i class="fa fa-twitter"></i> 01 Jan 2016
+                                                        </span>
+                                                        <span class="todo-tasklist-date" data-content="cant_retweet">
+                                                            <i class="fa fa-retweet"></i>0
+                                                        </span>
+                                                        <span
+                                                            class="todo-tasklist-badge badge badge-roundless bg-yellow-gold klout">K</span>
+                                                        <span data-content="klout">0</span>
+                                                    </div>
+                                                    <div class="todo-tasklist-controls pull-right">
+                                                <span class="todo-tasklist-badge badge badge-roundless"
+                                                      data-content="sentimiento">
+                                                    Sentiment
+                                                </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="todo-tasklist-item todo-tasklist-item-border-red">
-                                            <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar5.jpg" width="27px" height="27px">
-                                            <div class="todo-tasklist-item-title"> Homepage Alignments to adjust </div>
-                                            <div class="todo-tasklist-item-text"> Lorem ipsum dolor sit amet, consectetuer dolore dolor sit amet. </div>
-                                            <div class="todo-tasklist-controls pull-left">
-                                                                        <span class="todo-tasklist-date">
-                                                                            <i class="fa fa-calendar"></i> 14 Sep 2014 </span>
-                                                <span class="todo-tasklist-badge badge badge-roundless">Important</span>
+                                        <div class="tab-pane" id="tab_instagram">
+                                            <h3 class="font-grey-gallery sbold"><i class="fa fa-instagram">&nbsp;</i>Instagram
+                                            </h3>
+                                            <div id="instaLoad" class="todo-tasklist">
+                                                <div class='loading1 loading-instagram' style='display:none;'><img id=''
+                                                                                                                   src='busqueda/img/loading.gif'
+                                                                                                                   width='36'
+                                                                                                                   height='36'
+                                                                                                                   alt='loading gif'/>
+                                                </div>
+                                                <div id="todo-tasklist-instagram" class="todo-tasklist-item"
+                                                     style="display: none;">
+                                                    <img data-content="foto_perfil" class="todo-userpic pull-left"
+                                                         src="busqueda/img/instagram-default.jpg" width="27px"
+                                                         height="27px">
+                                                    <div class="todo-tasklist-item-title">
+                                                        <a data-content="nombre_usuario">Nombre</a>
+                                                <span class="pull-right">
+                                                    <i class="fa fa-star font-grey-salsa""></i>
+                                                    <i class="fa fa-flag font-grey-salsa""></i>
+                                                </span>
+                                                    </div>
+                                                    <div class="todo-tasklist-item-text" data-content="text_clean"> orem
+                                                        ipsum dolor sit amet, consectetur adipiscing elit. Sed non
+                                                        condimentum orci. Praesent sed risus vulputate, elementum dui a,
+                                                        vulputate quam. Nam porta ornare nunc quis elementum. Curabitur
+                                                        efficitur massa neque, a aliquam magna scelerisque at.
+                                                    </div>
+                                                    <div class="todo-tasklist-controls pull-left">
+                                                        <span class="todo-tasklist-date" data-content="created_at">
+                                                            <i class="fa fa-instagram"></i> 01 Jan 2016
+                                                        </span>
+                                                        <span class="todo-tasklist-date" data-content="likes">
+                                                            <i class="fa fa-heart"></i>0
+                                                        </span>
+                                                        <span class="todo-tasklist-date" data-content="count">
+                                                            <i class="fa fa-commenting"></i>0
+                                                        </span>
+                                                    </div>
+                                                    <div class="todo-tasklist-controls pull-right">
+                                                        <span class="todo-tasklist-badge badge badge-roundless"
+                                                              data-content="sentimiento">
+                                                            Sentiment
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="todo-tasklist-item todo-tasklist-item-border-blue">
-                                            <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar6.jpg" width="27px" height="27px">
-                                            <div class="todo-tasklist-item-title"> Contact Us Map Location changes </div>
-                                            <div class="todo-tasklist-item-text"> Lorem ipsum amet, consectetuer dolore dolor sit amet. </div>
-                                            <div class="todo-tasklist-controls pull-left">
-                                                                        <span class="todo-tasklist-date">
-                                                                            <i class="fa fa-calendar"></i> 04 Oct 2014 </span>
-                                                <span class="todo-tasklist-badge badge badge-roundless">Postponed</span>&nbsp;
-                                                <span class="todo-tasklist-badge badge badge-roundless">Test</span>
+                                        <div class="tab-pane" id="tab_youtube">
+                                            <h3 class="font-red-haze sbold"><i class="fa fa-youtube"></i>&nbsp;YouTube
+                                            </h3>
+                                            <div id="youtubeLoad" class="todo-tasklist">
+                                                <div class='loading1 loading-youtube' style='display:none;'>
+                                                    <img id='' src='busqueda/img/loading.gif' width='36' height='36' alt='loading gif'/>
+                                                </div>
+                                                <div id="todo-tasklist-youtube" class="todo-tasklist-item "
+                                                     style="display: none;">
+                                                    <!--<img data-content="foto_perfil" class="todo-userpic pull-left"
+                                                    src="busqueda/img/twitter-egg.jpeg" width="27px" height="27px">-->
+                                                    <div class="todo-tasklist-item-title">
+                                                        <span data-content="title">Titulo</span></br>
+                                                        <small class="font-grey-salsa" data-content="channelTitle">
+                                                            screenName
+                                                        </small>
+                                                    </div>
+                                                    <div class="todo-tasklist-item-text" data-content="description">
+                                                        Lorem dolor sit amet ipsum dolor sit consectetuer dolore.
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="todo-tasklist-item todo-tasklist-item-border-purple">
-                                            <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar7.jpg" width="27px" height="27px">
-                                            <div class="todo-tasklist-item-title"> Projects list new Forms </div>
-                                            <div class="todo-tasklist-item-text"> Lorem ipsum dolor sit amet, consectetuer dolore psum dolor sit. </div>
-                                            <div class="todo-tasklist-controls pull-left">
-                                                                        <span class="todo-tasklist-date">
-                                                                            <i class="fa fa-calendar"></i> 19 Dec 2014 </span>
+                                         </div>
+                                    <div class="tab-pane" id="tab_facebook">
+                                        <h3 class="font-blue-hoki sbold"><i class="fa fa-facebook"></i>&nbsp;Facebook
+                                        </h3>
+                                    </div>
+
+                                    <div class="tab-pane" id="tab_tumblr">
+                                        <h4 class="font-blue-hoki sbold"><i class="fa fa-tumblr"></i>&nbsp;Tumblr
+                                        </h4>
+                                        <div id="tumblrLoad" class="todo-tasklist">
+                                            <div class='loading1 loading-tumblr' style='display:none;'>
+                                                <img id='' src='busqueda/img/loading.gif' width='36' height='36' alt='loading gif'/>
                                             </div>
-                                        </div>
-                                        <div class="todo-tasklist-item todo-tasklist-item-border-yellow">
-                                            <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar8.jpg" width="27px" height="27px">
-                                            <div class="todo-tasklist-item-title"> New Search Keywords </div>
-                                            <div class="todo-tasklist-item-text"> Lorem ipsum dolor sit amet, consectetuer sit amet ipsum dolor, consectetuer ipsum consectetuer sit amet dolore. </div>
-                                            <div class="todo-tasklist-controls pull-left">
-                                                                        <span class="todo-tasklist-date">
-                                                                            <i class="fa fa-calendar"></i> 02 Feb 2015 </span>
-                                                <span class="todo-tasklist-badge badge badge-roundless">Postponed</span>&nbsp; </div>
+                                            <div id="todo-tasklist-tumblr" class="todo-tasklist-item "
+                                                 style="display: none;">
+                                                <!--<img data-content="foto_perfil" class="todo-userpic pull-left"
+                                                src="busqueda/img/twitter-egg.jpeg" width="27px" height="27px">-->
+                                                <div class="todo-tasklist-item-title">
+                                                    <span data-content="title">Titulo</span>
+                                                    <small class="font-grey-salsa" data-content="name">
+                                                        @screenName
+                                                    </small>
+                                                </div>
+                                                <div class="todo-tasklist-item-text" data-content="description">
+                                                    Lorem dolor sit amet ipsum dolor sit consectetuer dolore.
+                                                </div>
+                                                <div class="todo-tasklist-controls pull-left">
+
+                                                    <span class="todo-tasklist-date" data-content="posts">
+                                                            <i class="fa fa-eye"></i>0
+                                                    </span>
+                                                    <span class="todo-tasklist-date" data-content="nsfw">
+
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="tab-pane" id="tab_reddit">
+                                        <h3 class="font-blue sbold"><i class="fa fa-reddit">&nbsp;</i>Reddit</h3>
+                                        <div id="redditLoad" class="todo-tasklist">
+                                            <div class='loading1 loading-reddit' style='display:none;'>
+                                                <img id='' src='busqueda/img/loading.gif' width='36' height='36' alt='loading gif'/>
+                                            </div>
+                                            <div id="todo-tasklist-reddit" class="todo-tasklist-item " style="display: none;">
+                                                <div class="todo-tasklist-item-title">
+                                                    <div class="todo-tasklist-item-title">
+                                                        <span data-content="title">Titulo</span></br>
+                                                        <small class="font-grey-salsa" data-content="nombre_usuario">
+                                                            screenName
+                                                        </small>
+                                                    </div>
+                                                    </div>
+                                                    <div class="todo-tasklist-item-text" data-content="text_clean">
+                                                        Lorem dolor sit amet ipsum dolor sit consectetuer dolore.
+                                                    </div>
+                                                    <div class="todo-tasklist-controls pull-left">
+                                                        <span class="todo-tasklist-date" data-content="likes">
+                                                            <i class="fa fa-heart"></i>0
+                                                        </span>
+                                                        <span class="todo-tasklist-date" data-content="count">
+                                                            <i class="fa fa-commenting"></i>0
+                                                        </span>
+                                                    </div>
+                                                    <div class="todo-tasklist-controls pull-right">
+                                                <span class="todo-tasklist-badge badge badge-roundless"
+                                                      data-content="sentimiento">
+                                                    Sentiment
+                                                </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </div>
-                                <div class="todo-tasklist-devider"> </div>
-                                <div class="col-md-7 col-sm-8">
-                                    <form action="#" class="form-horizontal">
-                                        <!-- TASK HEAD -->
-                                        <div class="form">
-                                            <div class="form-group">
-                                                <div class="col-md-8 col-sm-8">
-                                                    <div class="todo-taskbody-user">
-                                                        <img class="todo-userpic pull-left" src="assets/layouts/layout3/img/avatar6.jpg" width="50px" height="50px">
-                                                        <span class="todo-username pull-left">Kevin Estrada</span>
-                                                        <button type="button" class="todo-username-btn btn btn-circle btn-default btn-sm">&nbsp;edit&nbsp;</button>
+                            </div>
+
+                            <div class="col-md-7 col-sm-8">
+
+                                <form action="#" class="form-horizontal">
+                                    <!-- TASK HEAD -->
+                                    <div id="panel" class="" style="">
+                                        <div id="panel-tweet" class="tweet-view">
+                                            <div class="form">
+                                                <!-- END TASK HEAD -->
+                                                <!-- TASK TITLE -->
+                                                <div id='tweet-body'></div>
+                                                <!-- TASK TAGS -->
+                                                <div class="form-group">
+                                                    <div class="col-md-6 sentimiento-class">
+                                                        <select id="sentimientoSelect"
+                                                                class="form-control todo-taskbody-tags selectpicker"
+                                                                tabindex="-1" aria-hidden="true">
+                                                            <option value="MuyPositivo">Muy Positivo</option>
+                                                            <option value="Positivo">Positivo</option>
+                                                            <option value="Neutral">Neutral</option>
+                                                            <option value="Negativo">Negativo</option>
+                                                            <option value="MuyNegativo">Muy Negativo</option>
+                                                            <option value="NoAsignado">No Asignado</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                            <span
+                                                                class="todo-tasklist-badge badge badge-roundless bg-yellow-gold klout">K</span>
+                                                        <span id="klout" data-content="klout">0</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 col-sm-4">
-                                                    <div class="todo-taskbody-date pull-right">
-                                                        <button type="button" class="todo-username-btn btn btn-circle btn-default btn-sm">&nbsp; Complete &nbsp;</button>
-                                                    </div>
-                                                </div>
                                             </div>
-                                            <!-- END TASK HEAD -->
-                                            <!-- TASK TITLE -->
-                                            <div class="form-group">
-                                                <div class="col-md-12">
-                                                    <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="@KevinEstrada"> </div>
+                                        </div>
+                                        <div id="panel-instagram">
+
+                                        </div>
+                                        <div id="panel-youtube">
+                                            <h2 id="v-title"> </h2>
+                                            <div id="player" class="videoWrapper">
+
                                             </div>
-                                            <!-- TASK DESC -->
-                                            <div class="form-group">
-                                                <div class="col-md-12">
-                                                    <textarea class="form-control todo-taskbody-taskdesc" rows="8" placeholder="Trabajando en DARS"></textarea>
-                                                </div>
+                                            <a id="v-channel" href="" class="font-red-haze" data-content="channelTitle">
+
+                                            </a>
+                                            <p id="v-description">
+
+                                            </p>
+
+                                        </div>
+                                        <div id="panel-tumblr">
+                                            <div id="tumblr" >
+
                                             </div>
-                                            <!-- END TASK DESC -->
-                                            <!-- TASK TAGS -->
-                                            <div class="form-group">
-                                                <div class="col-md-12">
-                                                    <select class="form-control todo-taskbody-tags" tabindex="-1" aria-hidden="true">
-                                                        <option value="Pending">Muy Positivo</option>
-                                                        <option value="Completed">Positivo</option>
-                                                        <option value="Testing">Neutral</option>
-                                                        <option value="Approved">Negativo</option>
-                                                        <option value="Rejected">Muy Negativo</option>
-                                                    </select>
-                                                </div>
+                                        </div>
+                                        <div id="panel-reddit">
+                                            <div id="reddit-content" >
+
                                             </div>
-                                            <!-- TASK TAGS -->
-                                            <div class="form-actions right todo-form-actions">
-                                                <button class="btn btn-circle btn-sm green">Save Changes</button>
-                                                <button class="btn btn-circle btn-sm btn-default">Cancel</button>
-                                            </div>
+                                            <div id="reddit-comments" class="comments"> </div>
                                         </div>
                                         <div class="tabbable-line">
                                             <ul class="nav nav-tabs ">
+                                                <!--                                                <li class="active">-->
+                                                <!--                                                    <a href="#tab_1" data-toggle="tab"> Respuestas </a>-->
+                                                <!--                                                </li>-->
                                                 <li class="active">
-                                                    <a href="#tab_1" data-toggle="tab"> Comments </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#tab_2" data-toggle="tab"> History </a>
+                                                    <a href="#tab_2" data-toggle="tab"> Mapa </a>
                                                 </li>
                                             </ul>
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="tab_1">
-                                                    <!-- TASK COMMENTS -->
-                                                    <div class="form-group">
-                                                        <div class="col-md-12">
-                                                            <ul class="media-list">
-                                                                <li class="media">
-                                                                    <a class="pull-left" href="javascript:;">
-                                                                        <img class="todo-userpic" src="assets/layouts/layout3/img/avatar8.jpg" width="27px" height="27px"> </a>
-                                                                    <div class="media-body todo-comment">
-                                                                        <button type="button" class="todo-comment-btn btn btn-circle btn-default btn-sm">&nbsp; Reply &nbsp;</button>
-                                                                        <p class="todo-comment-head">
-                                                                            <span class="todo-comment-username">José Carlos</span> &nbsp;
-                                                                            <span class="todo-comment-date">17 Ene 2015 at 2:05pm</span>
-                                                                        </p>
-                                                                        <p class="todo-text-color"> Mentiroso, no has hecho nada. </p>
-                                                                        <!-- Nested media object -->
-                                                                        <div class="media">
-                                                                            <a class="pull-left" href="javascript:;">
-                                                                                <img class="todo-userpic" src="assets/layouts/layout3/img/avatar4.jpg" width="27px" height="27px"> </a>
-                                                                            <div class="media-body">
-                                                                                <p class="todo-comment-head">
-                                                                                    <span class="todo-comment-username">Edgardo Acosta</span> &nbsp;
-                                                                                    <span class="todo-comment-date">17 Ene 2016 at 4:30pm</span>
-                                                                                </p>
-                                                                                <p class="todo-text-color"> Muy Cierto, muy cierto </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <!-- END TASK COMMENTS -->
-                                                    <!-- TASK COMMENT FORM -->
-                                                    <div class="form-group">
-                                                        <div class="col-md-12">
-                                                            <ul class="media-list">
-                                                                <li class="media">
-                                                                    <a class="pull-left" href="javascript:;">
-                                                                        <img class="todo-userpic" src="assets/layouts/layout3/img/avatar4.jpg" width="27px" height="27px"> </a>
-                                                                    <div class="media-body">
-                                                                        <textarea class="form-control todo-taskbody-taskdesc" rows="4" placeholder="Type comment..."></textarea>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                            <button type="button" class="pull-right btn btn-sm btn-circle green"> &nbsp; Submit &nbsp; </button>
-                                                        </div>
-                                                    </div>
-                                                    <!-- END TASK COMMENT FORM -->
-                                                </div>
+                                            <div class="">
+                                                <!--                                                <div class="tab-pane active" id="tab_1">-->
+                                                <!-- TASK COMMENTS -->
+                                                <!--                                                    <div class="form-group">-->
+                                                <!--                                                        <div class="col-md-12">-->
+                                                <!--                                                            <ul class="media-list">-->
+                                                <!--                                                                <li class="media">-->
+                                                <!--                                                                    <a class="pull-left" href="javascript:;">-->
+                                                <!--                                                                        <img class="todo-userpic" src="busqueda/img/twitter-egg.jpeg" width="27px" height="27px"> </a>-->
+                                                <!--                                                                    <div class="media-body todo-comment">-->
+                                                <!--                                                                        <button type="button" class="todo-comment-btn btn btn-circle btn-default btn-sm">&nbsp; Reply &nbsp;</button>-->
+                                                <!--                                                                        <p class="todo-comment-head">-->
+                                                <!--                                                                            <span class="todo-comment-username">JosÃ© Carlos</span> &nbsp;-->
+                                                <!--                                                                            <span class="todo-comment-date">17 Ene 2015 at 2:05pm</span>-->
+                                                <!--                                                                        </p>-->
+                                                <!--                                                                        <p class="todo-text-color"> Excelente espacio para desplegar tweets. </p>-->
+                                                <!--                                                                        <!-- Nested media object -->
+                                                <!--                                                                        <div class="media">-->
+                                                <!--                                                                            <a class="pull-left" href="javascript:;">-->
+                                                <!--                                                                                <img class="todo-userpic" src="busqueda/img/twitter-egg.jpeg" width="27px" height="27px"> </a>-->
+                                                <!--                                                                            <div class="media-body">-->
+                                                <!--                                                                                <p class="todo-comment-head">-->
+                                                <!--                                                                                    <span class="todo-comment-username">Edgardo Acosta</span> &nbsp;-->
+                                                <!--                                                                                    <span class="todo-comment-date">17 Ene 2016 at 4:30pm</span>-->
+                                                <!--                                                                                </p>-->
+                                                <!--                                                                                <p class="todo-text-color"> Muy Cierto, muy cierto </p>-->
+                                                <!--                                                                            </div>-->
+                                                <!--                                                                        </div>-->
+                                                <!--                                                                    </div>-->
+                                                <!--                                                                </li>-->
+                                                <!--                                                            </ul>-->
+                                                <!--                                                        </div>-->
+                                                <!--                                                    </div>-->
+                                                <!--                                                    <!-- END TASK COMMENTS -->
+                                                <!--                                                    <!-- TASK COMMENT FORM -->
+                                                <!--                                                    <div class="form-group">-->
+                                                <!--                                                        <div class="col-md-12">-->
+                                                <!--                                                            <ul class="media-list">-->
+                                                <!--                                                                <li class="media">-->
+                                                <!--                                                                    <a class="pull-left" href="javascript:;">-->
+                                                <!--                                                                        <img class="todo-userpic" src="busqueda/img/twitter-egg.jpeg" width="27px" height="27px"> </a>-->
+                                                <!--                                                                    <div class="media-body">-->
+                                                <!--                                                                        <textarea class="form-control todo-taskbody-taskdesc" rows="4" placeholder="Type comment..."></textarea>-->
+                                                <!--                                                                    </div>-->
+                                                <!--                                                                </li>-->
+                                                <!--                                                            </ul>-->
+                                                <!--                                                            <button type="button" class="pull-right btn btn-sm btn-circle green"> &nbsp; Submit &nbsp; </button>-->
+                                                <!--                                                        </div>-->
+                                                <!--                                                    </div>-->
+                                                <!-- END TASK COMMENT FORM -->
+                                                <!--                                                </div>-->
                                                 <div class="tab-pane" id="tab_2">
-                                                    <ul class="todo-task-history">
-                                                        <li>
-                                                            <div class="todo-task-history-date"> 20 Jun, 2014 at 11:35am </div>
-                                                            <div class="todo-task-history-desc"> Task created </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="todo-task-history-date"> 21 Jun, 2014 at 10:35pm </div>
-                                                            <div class="todo-task-history-desc"> Task category status changed to "Top Priority" </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="todo-task-history-date"> 22 Jun, 2014 at 11:35am </div>
-                                                            <div class="todo-task-history-desc"> Task owner changed to "Nick Larson" </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="todo-task-history-date"> 30 Jun, 2014 at 8:09am </div>
-                                                            <div class="todo-task-history-desc"> Task completed by "Nick Larson" </div>
-                                                        </li>
-                                                    </ul>
+                                                    <!-- MAP SECTION -->
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <div id="map">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- EN MAP SECTION -->
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- END TODO CONTENT -->
             </div>
+            <!-- END TODO CONTENT -->
         </div>
-        <!-- END PAGE CONTENT-->
     </div>
+    <!-- END PAGE CONTENT-->
+</div>
 </div>
 <!--==============================
     Scripts Section
@@ -476,8 +672,11 @@ include 'header.php';
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="assets/apps/scripts/todo-2.min.js" type="text/javascript"></script>
+<script src="//twemoji.maxcdn.com/twemoji.min.js"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <!-- BEGIN PERSONAL SCRIPTS -->
 <script src="busqueda/busqueda_v1.js"></script>
 <!-- END PERSONAL SCRIPTS -->
 </html>
+
+
